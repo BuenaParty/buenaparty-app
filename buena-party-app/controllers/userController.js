@@ -10,4 +10,12 @@ exports.listUsers = (req, res) => {
 
     });
 
-}
+};
+
+exports.registerUser = (req, res) => {
+
+    const newUser = { nome: req.body.name, e_mail: req.body.e_mail, senha: req.body.pass, telefone: req.body.phone };
+
+    User.registerUser(newUser, (error) => { if (error) { res.status(500).json({ error: `Error ao registrar o usuário: ${error}`}); return; } res.status(201).json({ user: newUser }); });
+
+};
