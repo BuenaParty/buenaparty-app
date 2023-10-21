@@ -1,14 +1,11 @@
-const mysql = require('mysql2');
+const sqlite = require('sqlite3');
 
-const dbConfig = {
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'buena_party'
-};
+const db = new sqlite.Database('./database/buena_party.db', (error) => {
+    if (error) {
+        console.error(`Erro ao se conectar com o Banco de Dados: ${error}`);
+    } else {
+        console.log('Conexão com o Banco de Dados bem sucedida!');
+    }
+});
 
-const dbConnection = mysql.createConnection(dbConfig);
-
-dbConnection.connect(error => { if (error) { console.log(`Erro ao se conectar com o Banco: ${error}`); return; } console.log('Conexão bem sucedida com o Banco!'); });
-
-module.exports = dbConnection;
+module.exports = db;
