@@ -1,13 +1,13 @@
-const { insertUser, getUsers } = require('../models/userModel');
+const { insertUser, getUsers, changeUser, removeUser } = require('../models/userModel');
 
 const registerUser = (req, res) => {
     const user = req.body;
 
     insertUser(user, (error) => {
         if (error) {
-            res.status(500).json({ error: `Erro ao registrar o usuário: ${error}` });
+            res.status(500).json({ error: `Erro ao registrar o usuário ${user.nome}: ${error}` });
         } else {
-            res.status(201).json({ message: `Usuário registrado com sucesso! ${user}` });
+            res.status(201).json({ message: `Usuário ${user.nome} registrado com sucesso!` });
         }
     });
 };
@@ -22,4 +22,32 @@ const listUsers = (req, res) => {
     });
 };
 
-module.exports = { registerUser, listUsers };
+const updateUser = (req, res) => {
+    const userId = req.params.id;
+    const updatedUser = req.body;
+    
+    changeUser(userId, updatedUser, (error) => {
+        if (error) {
+            res.status(500).json({ error: `Erro ao atualizar os registros do usuário ${updatedUser.nome}: ${error}`});
+        } else {
+            res.status(200).json({ message: `Registros do usuário ${updatedUser.nome} atualizados com sucesso!`});
+        }
+    })
+};
+
+const deleteUser = (req, res) => {
+    const userId = req.params.id;
+
+    removeUser(userId, (error, deletedUser) => {
+        
+        const user = user
+        
+        if (error) {
+            res.status(500).json({ error: `Erro ao excluir o usuário ${deletedUser}: ${error}`});
+        } else {
+            res.status(200).json({ message: `Usuário ${deletedUser} excluído com sucesso!`});
+        }
+    })
+}
+
+module.exports = { registerUser, listUsers, updateUser, deleteUser };

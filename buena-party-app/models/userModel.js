@@ -22,7 +22,7 @@ const insertUser = (user, callback) => {
             callback(null);
         }
     })
-}
+};
 
 const getUsers = (callback) => {
     db.all('SELECT * FROM usuario;', (error, rows) => {
@@ -31,9 +31,50 @@ const getUsers = (callback) => {
         } else {
             callback(null, rows);
         }
-
-        db.close();
     });
 };
 
-module.exports = { createUserTable, insertUser, getUsers };
+const changeUser = (userId, updatedUser, callback) => {
+    const { nome, e_mail, senha, telefone } = updatedUser;
+
+    db.run('UPDATE usuario SET nome = ?, e_mail = ?, senha = ?, telefone = ? WHERE id = ?', [nome, e_mail, senha, telefone, userId], (error) => {
+        if (error) {
+            callback(error);
+        } else {
+            callback(null);
+        }
+    });
+};
+
+const removeUser = (userId, callback) => {
+    
+    let deletedUser;
+    
+    db.serialize(_ => {
+        db.get('SELECT nome FROM usuario WHERE id = ?', userId, (error, result) => {
+            if (error) {
+                callback(error);
+            } else if (result) {
+                deletedUser = result;
+        
+                db.run('DELETE FROM usuario WHERE id = ?', userId, (error) => {
+                    if (error) {
+                        callback(error);
+                    } else {
+                        db.run('VACUUM', (error) => {
+                            if (error) {
+                                callback(error);
+                    } else {
+                        callback(null, deletedUser);
+                    }
+                });
+            }
+        });
+        } else {
+            callback('Usuário não encontrado...');
+        }
+    });
+});
+}
+
+module.exports = { createUserTable, insertUser, getUsers, changeUser, removeUser };
