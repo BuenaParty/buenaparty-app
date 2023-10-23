@@ -10,7 +10,7 @@ const createUserTable = () => {
             }
         });
     });
-}; 
+};
 
 const insertUser = (user, callback) => {
     const { nome, e_mail, senha, telefone } = user;
@@ -47,16 +47,16 @@ const changeUser = (userId, updatedUser, callback) => {
 };
 
 const removeUser = (userId, callback) => {
-    
+
     let deletedUser;
-    
+
     db.serialize(_ => {
         db.get('SELECT nome FROM usuario WHERE id = ?', userId, (error, result) => {
             if (error) {
                 callback(error);
             } else if (result) {
                 deletedUser = result;
-        
+
                 db.run('DELETE FROM usuario WHERE id = ?', userId, (error) => {
                     if (error) {
                         callback(error);
@@ -64,17 +64,21 @@ const removeUser = (userId, callback) => {
                         db.run('VACUUM', (error) => {
                             if (error) {
                                 callback(error);
-                    } else {
-                        callback(null, deletedUser);
+                            } else {
+                                callback(null, deletedUser);
+                            }
+                        });
                     }
                 });
+            } else {
+                callback('Usuário não encontrado...');
             }
         });
-        } else {
-            callback('Usuário não encontrado...');
-        }
     });
-});
 }
 
-module.exports = { createUserTable, insertUser, getUsers, changeUser, removeUser };
+const resetAutoIncrement = _ => {
+    db.run('DELETE FROM sqlite_sequence WHERE name = "usuario"');
+}
+
+module.exports = { createUserTable, insertUser, getUsers, changeUser, removeUser, resetAutoIncrement };

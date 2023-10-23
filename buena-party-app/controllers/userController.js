@@ -1,4 +1,4 @@
-const { insertUser, getUsers, changeUser, removeUser } = require('../models/userModel');
+const { insertUser, getUsers, changeUser, removeUser, resetAutoIncrement } = require('../models/userModel');
 
 const registerUser = (req, res) => {
     const user = req.body;
@@ -39,13 +39,11 @@ const deleteUser = (req, res) => {
     const userId = req.params.id;
 
     removeUser(userId, (error, deletedUser) => {
-        
-        const user = user
-        
         if (error) {
-            res.status(500).json({ error: `Erro ao excluir o usuário ${deletedUser}: ${error}`});
+            res.status(500).json({ error: `Erro ao excluir o usuário ${deletedUser.nome}: ${error}`});
         } else {
-            res.status(200).json({ message: `Usuário ${deletedUser} excluído com sucesso!`});
+            resetAutoIncrement()
+            res.status(200).json({ message: `Usuário ${deletedUser.nome} excluído com sucesso!`});
         }
     })
 }
