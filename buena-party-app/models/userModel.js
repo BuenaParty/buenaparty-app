@@ -12,18 +12,28 @@ const createUserTable = () => {
     });
 }; 
 
-const insertUser = (user) => {
+const insertUser = (user, callback) => {
     const { nome, e_mail, senha, telefone } = user;
 
-    const insertStatament = db.prepare('INSERT INTO usuario (nome, e_mail, senha, telefone) VALUES (?, ?, ?, ?)');
-    insertStatament.run([nome, e_mail, senha, telefone,], (error) => {
+    db.run('INSERT INTO usuario (nome, e_mail, senha , telefone) VALUES (?, ?, ?, ?)', [nome, e_mail, senha, telefone], (error) => {
         if (error) {
-            console.error(`Erro ao inserir os registros na tabela 'usuario': ${error}`);
+            callback(error);
         } else {
-            console.log('Registros inseridos com sucesso!');
+            callback(null);
         }
-    });
-    insertStatament.finalize();
+    })
 }
 
-module.exports = { createUserTable, insertUser };
+const getUsers = (callback) => {
+    db.all('SELECT * FROM usuario;', (error, rows) => {
+        if (error) {
+            callback(error, null);
+        } else {
+            callback(null, rows);
+        }
+
+        db.close();
+    });
+};
+
+module.exports = { createUserTable, insertUser, getUsers };
