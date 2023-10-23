@@ -12,7 +12,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import axios from 'axios';
 const { width, height } = Dimensions.get('screen');
 
-const urlAPI = 'http://localhost:3090';
+const urlAPI = 'http://localhost:3000';
 
 type RegisterProps = {
     navigation: StackNavigationProp<any>;
@@ -27,9 +27,9 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post(`${urlAPI}/register/user`, {
+            const response = await axios.post(`${urlAPI}/user/register`, {
                 nome: nome,
-                email: email,
+                e_mail: email,
                 telefone: telefone,
                 senha: senha
             });

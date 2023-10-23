@@ -2,11 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { createUserTable } = require('./models/userModel');
 const { registerUser, listUsers, updateUser, deleteUser } = require('./controllers/userController');
+const cors = require('cors');
+const { login } = require('./controllers/authController');
 
 const server = express();
 const port = 3000;
 
 server.use(bodyParser.json());
+server.use(cors());
 
 // Criação da tabela de usuários
 createUserTable();
@@ -14,6 +17,8 @@ createUserTable();
 // Operações com os usuários
 server.post('/user/register', registerUser);
 server.get('/users', listUsers);
+
+server.post('/user/login', login);
 
 server.param('id', (req, res, next, id) => {
     req.userId = parseInt(id, 10);
