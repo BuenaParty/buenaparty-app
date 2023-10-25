@@ -1,11 +1,24 @@
-import { StyleSheet } from "react-native-web";
+import { React } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
-export default StyleSheet.create({
-    backgroundGradient: {
+const Background = ({ children }) => {
+    return (
+        <View style={{ flex: 1 }}>
+            <LinearGradient colors={['#070624', '#000000', '#070624']} style={styles.container}>
+                {children}
+            </LinearGradient>
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
         flex: 1,
-        backgroundColor: 'transparent',
-        justifyContent: 'center',
         alignItems: 'center',
-        background: 'linear-gradient(to bottom, #070624, #000000, #070624)'
+        justifyContent: 'center'
+
     }
-})
+});
+
+export default Background;
