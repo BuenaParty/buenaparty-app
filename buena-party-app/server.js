@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { createUserTable } = require('./models/userModel');
-const { registerUser, listUsers, updateUser, deleteUser } = require('./controllers/userController');
+const { registerUser, listUsers, updateUser, deleteUser } = require('./controllers/user/userController');
+const { userLogin } = require('./controllers/user/authController');
 
 const server = express();
 const port = 3000;
@@ -13,6 +14,7 @@ createUserTable();
 
 // Operações com os usuários
 server.post('/user/register', registerUser);
+server.post('/user/login', userLogin);
 server.get('/users', listUsers);
 
 server.param('id', (req, res, next, id) => {

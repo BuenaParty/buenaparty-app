@@ -1,4 +1,4 @@
-const { insertUser, getUsers, changeUser, removeUser, resetAutoIncrement } = require('../models/userModel');
+const { insertUser, getUsers, changeUser, removeUser, resetAutoIncrement } = require('../../models/userModel');
 
 const registerUser = (req, res) => {
     const user = req.body;
