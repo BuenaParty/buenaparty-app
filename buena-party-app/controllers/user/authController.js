@@ -1,5 +1,6 @@
 const { checkUser } = require('../../models/userModel');
 
+// Parei aqui
 const userLogin = (req, res) => {
     const { e_mail, senha } = req.body;
 
@@ -14,6 +15,6 @@ const userLogin = (req, res) => {
             }
         }
     });
-}
+};
 
 module.exports = { userLogin };

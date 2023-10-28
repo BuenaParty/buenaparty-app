@@ -18,6 +18,6 @@ export default StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         borderRadius: 25,
-        color: 10
+        color: 'white'
     }
 })
