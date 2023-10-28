@@ -4,15 +4,19 @@ const CORS = require('cors');
 const { createUserTable } = require('./models/userModel');
 const { registerUser, listUsers, updateUser, deleteUser } = require('./controllers/user/userController');
 const { userLogin } = require('./controllers/user/authController');
+const { createEventTable } = require('./models/eventModel');
 
 const server = express();
 const port = 3000;
 
-// server.use(CORS);
+server.use(CORS);
 server.use(bodyParser.json());
 
 // Criação da tabela de usuários
 createUserTable();
+
+// Criação da tabela de eventos
+createEventTable();
 
 // Operações com os usuários
 server.post('/user/register', registerUser);
