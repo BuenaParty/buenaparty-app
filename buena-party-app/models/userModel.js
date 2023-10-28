@@ -95,6 +95,6 @@ const removeUser = (userId, callback) => {
 
 const resetAutoIncrement = _ => {
     db.run('DELETE FROM sqlite_sequence WHERE name = "usuario"');
-}
+};
 
 module.exports = { createUserTable, insertUser, checkUser, getUsers, changeUser, removeUser, resetAutoIncrement };
