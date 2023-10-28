@@ -8,8 +8,8 @@ const { userLogin } = require('./controllers/user/authController');
 const server = express();
 const port = 3000;
 
+// server.use(CORS);
 server.use(bodyParser.json());
-server.use(CORS);
 
 // Criação da tabela de usuários
 createUserTable();

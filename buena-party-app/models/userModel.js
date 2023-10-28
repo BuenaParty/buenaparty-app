@@ -24,22 +24,21 @@ const insertUser = (user, callback) => {
     })
 };
 
-const checkUser = (e_mail, senha, callback) => {
-    db.get('SELECT e_mail, senha FROM usuario WHERE e_mail = ?', e_mail, (error, result) => {
+const checkUser = (userE_mail, userSenha, callback) => {
+    db.run('SELECT e_mail, senha FROM usuario WHERE e_mail = ?', userE_mail, (error, result) => {
         if (error) {
-            console.log(`Não foi encontrado nenhum usuário com esse e-mail! ${error}`);
+            console.log(`Erro ao consultar as informações no Banco de Dados: ${error}`);
             callback(error, null);
         } else {
-            if (result.senha == senha) {
-                console.log(`Usuário encontrado: E-mail - ${result.e_mail} Senha - ${result.senha}`);
-                callback(null, result);
-            } else {
-                console.log('Credenciais inválidas!');
-                callback(null, null);
-            }
-        }
-    });
-}
+            console.log(`Informações verificadas: ${result}`);
+            callback(null, result);
+        };
+        // } else {
+        //     console.log(`As credenciais não são válidas: ${result}`);
+        //     callback(null);
+        // }
+    })
+};
 
 const getUsers = (callback) => {
     db.all('SELECT * FROM usuario;', (error, rows) => {
