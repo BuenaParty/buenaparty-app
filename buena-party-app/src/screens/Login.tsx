@@ -24,19 +24,22 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
     checkAuthToken();
   }, []);
 
+  const urlAPI = 'http://localhost:3000';
+
   const checkAuthToken = async () => {
     // Verifique se há um token no AsyncStorage
     const authToken = await AsyncStorage.getItem('authToken');
+    console.log('authToken:', authToken);
     if (authToken) {
       // Se houver um token, navegue para a tela Home diretamente
       navigation.navigate('HomeScreen');
     }
   };
-  const { width, height } = Dimensions.get('screen')
+  
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:3090/login', {
-        email: email,
+      const response = await axios.post(`${urlAPI}/user/login`, {
+        e_mail: email,
         senha: senha,
       });
 
@@ -45,8 +48,8 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
 
         // Armazene o token no AsyncStorage após um login bem-sucedido
         await AsyncStorage.setItem('authToken', response.data.token);
-        await AsyncStorage.setItem(`idUser`, response.data.id);
-        await AsyncStorage.setItem(`nomeUser`, response.data.nome);
+        await AsyncStorage.setItem('idUser', response.data.id);
+        await AsyncStorage.setItem('nomeUser', response.data.nome);
 
         navigation.navigate('HomeScreen');
 

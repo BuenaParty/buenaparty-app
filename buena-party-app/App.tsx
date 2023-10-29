@@ -17,7 +17,7 @@ const App = () => {
   return (
 
 
-    /*<SafeAreaProvider>
+    <SafeAreaProvider>
        <NavigationContainer>
          <Stack.Navigator>
  
@@ -72,26 +72,9 @@ const App = () => {
  
          </Stack.Navigator>
        </NavigationContainer>
-     </SafeAreaProvider>*/
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="CreateEvent"
-            component={HomeScreens2}
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider >
-
-
-
-
-
-  );
+     </SafeAreaProvider>
+   
+  )
 };
 
 
