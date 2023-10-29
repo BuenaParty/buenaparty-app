@@ -102,13 +102,13 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
                         onChange={text => setConfirmarSenha(text)}
                         value={confirmarSenha}
                     />
-
-                    <View style={style.buttonContainer}>
-                        <GradientButtonM onPress={handleSubmit} colors={[]}>
-                            <Text style={styles.gradientButtonMText}>Cadastrar</Text>
-                        </GradientButtonM>
-                    </View>
                 </ScrollView>
+                <View style={style.buttonContainer}>
+                    <GradientButtonM onPress={handleSubmit} colors={[]}>
+                        <Text style={styles.gradientButtonMText}>Cadastrar</Text>
+                    </GradientButtonM>
+                </View>
+
             </SafeAreaView>
         </Background>
     );
@@ -133,6 +133,7 @@ const style = StyleSheet.create({
     text: {
         color: 'white',
         fontSize: 25,
+        fontWeight:'bold'
 
     },
     LogoContainer: {
@@ -157,7 +158,7 @@ const style = StyleSheet.create({
         alignItems: 'center',
     },
     buttonContainer: {
-        marginTop: 20,
+        marginTop: 0,
     },
 });
 

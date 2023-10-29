@@ -7,11 +7,11 @@ const styles = StyleSheet.create({
     gradientButtonL: {
         
         width:width/1.2,
-        height:width/5.3,
+        height:height/11,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 20
+        marginBottom: 20,
     },
     gradientButtonLText: {
         fontFamily: 'Strong',
@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
         color: '#FFFFFF'
     },
     gradientButtonS: {
-        height: 60,
-        width: 130,
+        height:height/11,
+        width: width/3,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         //height: 70,
         //width: 320,
         width:width/1.23,
-        height:width/5.4,
+        height:height/10,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
         width:width/1.25,
-        height:width/6,
+        height:height/11,
         borderRadius: 15,
         margin: 10,
 
@@ -134,22 +134,26 @@ const styles = StyleSheet.create({
         right: 120,
         top:30,
     },
-    LogoBranca: {
-        
-        
-
-    },
+   
 
     //NAV BAR2
     boxImage2:{
-        flexDirection: 'row-reverse',
-        justifyContent: 'center',
-        position: 'relative',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: width,
+        marginBottom: 40
         
     },
     profile:{
-        left:160 ,
-        top:30
+        width: width / 6,
+        height: width / 6,
+    },
+    LogoBranca:{
+        width: width / 4,
+        height: width / 4,
+        alignItems: 'center',
+        marginRight: width / 6,
     },
     
     //EVENT BOX
