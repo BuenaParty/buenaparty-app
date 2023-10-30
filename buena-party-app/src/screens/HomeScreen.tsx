@@ -11,12 +11,15 @@ import GradientButtonS from '../components/GradientButtonS';
 import { useNavigation } from '@react-navigation/native';
 import { color } from 'react-native-elements/dist/helpers';
 import FirstScreen from './FirstScreen';
+import CreateEvent from './CreateEvent';
 import ListEvents from './ListEvents';
 
 type HomeScreenProps = {
   navigation: StackNavigationProp<any>;
 };
+
 const { width, height } = Dimensions.get('screen')
+
 const HomeScreen: React.FC<HomeScreenProps> = ({ }) => {
   const navigation = useNavigation();
   const [userName, setUserName] = useState('');

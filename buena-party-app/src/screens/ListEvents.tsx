@@ -11,10 +11,10 @@ import axios, { AxiosResponse } from 'axios';
 
 type Event = {
   id: number;
-  criado_por: number;
+  criado_por: string;
   nome: string;
   data: string;
-  hora: string;
+  horario: string;
   endereco: string;
 };
 
@@ -34,7 +34,7 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
         console.log('Response:', response.data);
 
         if (response.status === 200) {
-          setEvents(response.data);
+          setEvents(response.data.result);
         } else {
           console.log('Nenhum evento encontrado.');
         }
@@ -60,25 +60,34 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
             {events.length > 0 ? (
               events.map((event) => (
                 <View key={event.id} style={style.eventBox}>
-                  <GradientText style={styles.eventBoxText}>{event.nome}</GradientText>
-                  <Text>Data: {event.data}</Text>
-                  <Text>Hora: {event.hora}</Text>
-                  <Text>Endereço: {event.endereco}</Text>
-                  <Text>Criado por: {event.criado_por}</Text>
+                  <GradientText style={style.text}>{event.nome}</GradientText>
+                  <Text style={style.text}>Data: {event.data}</Text>
+                  <Text style={style.text}>Hora: {event.horario}</Text>
+                  <Text style={style.text}>Endereço: {event.endereco}</Text>
+                  <Text style={style.text}>Criado por: {event.criado_por}</Text>
+                  <View style={style.buttonContainer}>
+                    <GradientButtonS colors={[]} onPress={() => navigation.navigate('EditEvent', { eventId: event.id })}>
+                    <Text style={styles.gradientButtonSText}>Editar evento</Text>
+                    </GradientButtonS>
+                    <GradientButtonS colors={[]} onPress={[]}>
+                    <Text style={styles.gradientButtonSText}>Deletar evento</Text>
+                    </GradientButtonS>
+                  </View>
                 </View>
+                
               ))
             ) : (
               <Text style={style.noEventsText}>Nenhum evento encontrado.</Text>
             )}
-            <Text style={style.text}>Eventos convidados</Text>
+            {/*<Text style={style.text}>Eventos convidados</Text>
             <View style={style.eventBox}>
               <EventBox
                 colors={[]}
                 onPress={() => navigation.navigate('Event Details')}
                 iconSource={require('../../assets/icons/more.png')}
               />
+            </View>*/}
             </View>
-          </View>
         </View>
       </SafeAreaView>
     </Background>
@@ -98,7 +107,6 @@ const style = StyleSheet.create({
   },
   text: {
     color: '#fff',
-    textAlign: 'center',
     fontSize: 34,
     fontWeight: 'bold',
     padding: 10,

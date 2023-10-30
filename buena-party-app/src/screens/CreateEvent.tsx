@@ -20,7 +20,7 @@ const urlAPI = 'http://localhost:3000';
 const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
 
   const [nome, setNome] = useState(''); 
-  const [local, setLocal] = useState(''); 
+  const [endereco, setEndereco] = useState(''); 
   const [data, setData] = useState('');
   const [horario, setHorario] = useState('');
   const [mensagem, setMensagem] = useState('');
@@ -28,21 +28,21 @@ const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
   const handleSubmit = async () => {
     try {
       const userId = await AsyncStorage.getItem('idUser'); // Obtenha o userId do AsyncStorage
-  
+      const nomeUser = await AsyncStorage.getItem('nomeUser');
       console.log(userId);
 
       const response = await axios.post(`${urlAPI}/event/register`, {
         nome: nome,
         data: data,
-        hora: horario,
-        local: local,
-        criado_por: userId
+        horario: horario,
+        endereco: endereco,
+        criado_por: nomeUser,
       });
   
       if (response.status === 201) {
         setMensagem('Evento criado com sucesso!');
         setNome('');
-        setLocal('');
+        setEndereco('');
         setHorario('');
         setData('');
   
@@ -74,8 +74,8 @@ const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
             colors={[]}
             placeholder='Local'
             iconSource={require('../../assets/icons/address.png')}
-            onChange={text => setLocal(text)} 
-            value={local}
+            onChange={text => setEndereco(text)} 
+            value={endereco}
           />
           <FormBox
             colors={[]}

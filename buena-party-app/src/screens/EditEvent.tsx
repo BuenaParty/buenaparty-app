@@ -13,7 +13,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 
-type EditAccountountProps = {
+type EditEventProps = {
+    route: { params: {eventId: number } };
     navigation: StackNavigationProp<any>;
 };
 const baseTextSize = 29;
@@ -21,118 +22,96 @@ const screen = Dimensions.get('screen');
 const textSize = (screen.width * 0.2 * baseTextSize) / 100;
 
 const { width, height } = Dimensions.get('screen');
-const EditAccount: React.FC<EditAccountountProps> = ({ navigation }) => {
+
+const EditEvent: React.FC<EditEventProps> = ({ navigation, route }) => {
+    const { eventId } = route.params;
+
     const [nome, setNome] = useState('');
-    const [telefone, setTelefone] = useState('');
-    const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
-    const [confirmarSenha, setConfirmarSenha] = useState('');
+    const [endereco, setEndereco] = useState('');
+    const [data, setData] = useState('');
+    const [horario, setHorario] = useState('');
 
-    // UseEffect para buscar os dados do usuário e preencher os estados ao carregar a tela de edição
     useEffect(() => {
-        // Faça uma solicitação GET para obter os dados do usuário com base no ID
-        const userId = 1; // Substitua pelo ID do usuário que está editando
-        axios.get(`http://localhost:3090/api/user/${userId}`)
-            .then((response) => {
-                const userData = response.data; // Os dados do usuário obtidos do servidor
-                setNome(userData.nome);
-                setTelefone(userData.telefone);
-                setEmail(userData.email);
-                // Defina outros estados conforme necessário
-            })
-            .catch((error) => {
-                console.error('Erro ao buscar dados do usuário:', error);
-            });
-    }, []);
+        const fetchEventData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/event/${eventId}`);
+                const eventData = response.data;
 
+                console.log('eventData:', eventData);
+                setNome(eventData.nome);
+                setEndereco(eventData.endereco);
+                setData(eventData.data);
+                setHorario(eventData.horario);
+                
+            } catch (error) {
+                console.error('Erro ao buscar dados do evento:', error);
+            }
+        };
+
+        fetchEventData();
+    }, [eventId]);
+ 
+    
     const handleEdit = async () => {
         try {
-            const userId = 1; // Substitua pelo ID do usuário que está editando
+            await axios.put(`http://localhost:3000/event/update/${eventId}`, {
+                nome,
+                endereco,
+                data,
+                horario,
+        });
 
-            // Faça uma solicitação PUT para atualizar os dados do usuário
-            await axios.put(`http://localhost:3090/update/user/${userId}`, {
-                nome: nome,
-                telefone: telefone,
-                email: email,
-                senha: senha,
-                // Inclua outros campos conforme necessário
-            });
-
-            // Redirecione para a tela de perfil ou outra tela após a edição bem-sucedida
-            navigation.navigate('My Account');
+            navigation.navigate('ListEvents', { eventId });
         } catch (error) {
-            console.error('Erro ao editar usuário:', error);
+            console.error('Erro ao editar evento:', error);
         }
     };
 
     return (
-        <Background colors={[]} style={style.container}>
-            <SafeAreaView style={style.container}>
-                <View style={style.boxImage}>
-                    <TouchableOpacity onPress={() => navigation.navigate('FirstScreen')}>
-                        <Images
-                            style={style.back}
-                            iconSource={require('../../assets/icons/back.png')}
-                        />
-                    </TouchableOpacity>
-                    <View style={style.LogoContainer}>
-                        <Images
-                            style={style.LogoBranco}
-                            iconSource={require('../../assets/icons/LogoBranco.png')}
-                        />
+            <Background colors={[]} style={style.container}>
+                <SafeAreaView style={style.container}>
+                    <View style={style.boxImage}>
+                        {/* Código para navegar de volta para a tela de detalhes do evento */}
                     </View>
-                </View>
-                <Text style={{ fontSize: textSize, color: 'white', fontWeight: 'bold',marginBottom:38 }}>Editar Evento</Text>
-                <ScrollView contentContainerStyle={style.formBox}>
-              
-                    
-                
-                    <FormBox
-                        colors={[]}
-                        placeholder="Nome"
-                        iconSource={require('../../assets/icons/party.png')}
-                        onChange={text => setNome(text)}
-                        value={nome}
-                    />
-                    <FormBox
-                        colors={[]}
-                        placeholder="Descrição"
-                        iconSource={require('../../assets/icons/aviso.png')}
-                        onChange={text => setTelefone(text)}
-                        value={telefone}
-                    />
-                    <FormBox
-                        colors={[]}
-                        placeholder="Local"
-                        iconSource={require('../../assets/icons/email.png')}
-                        onChange={text => setEmail(text)}
-                        value={email}
-                    />
-                    <FormBox
-                        colors={[]}
-                        placeholder="Data"
-                        iconSource={require('../../assets/icons/address.png')}
-                        onChange={text => setSenha(text)}
-                        value={senha}
-                    />
-
-                    <FormBox
-                        colors={[]}
-                        placeholder="Horário"
-                        iconSource={require('../../assets/icons/hour.png')}
-                        onChange={text => setConfirmarSenha(text)}
-                        value={confirmarSenha}
-                    />
-                </ScrollView>
-                <View style={style.buttonContainer}>
-                    <GradientButtonM onPress={handleEdit} colors={[]}>
-                        <Text style={styles.gradientButtonMText}>Confirmar</Text>
-                    </GradientButtonM>
-                </View>
-
-            </SafeAreaView>
-        </Background>
-    );
+                    <Text style={{ fontSize: textSize, color: 'white', fontWeight: 'bold', marginBottom: 38 }}>Editar Evento</Text>
+                    <ScrollView contentContainerStyle={style.formBox}>
+                        <FormBox
+                            colors={[]}
+                            placeholder={nome}
+                            iconSource={require('../../assets/icons/party.png')}
+                            onChange={text => setNome(text)}
+                            value={nome}
+                        />
+                        <FormBox
+                            colors={[]}
+                            placeholder={endereco}
+                            iconSource={require('../../assets/icons/address.png')}
+                            onChange={text => setEndereco(text)}
+                            value={endereco}
+                        />
+                        <FormBox
+                            colors={[]}
+                            placeholder={`${data}`}
+                            iconSource={require('../../assets/icons/date.png')}
+                            onChange={text => setData(text)}
+                            value={data}
+                        />
+                        <FormBox
+                            colors={[]}
+                            placeholder={`${horario}`}
+                            iconSource={require('../../assets/icons/hour.png')}
+                            onChange={text => setHorario(text)}
+                            value={horario}
+                        />
+                    </ScrollView>
+                    <View style={style.buttonContainer}>
+                        <GradientButtonM onPress={handleEdit} colors={[]}>
+                            <Text style={styles.gradientButtonMText}>Confirmar</Text>
+                        </GradientButtonM>
+                    </View>
+                </SafeAreaView>
+            </Background>
+        );
 };
 
 const style = StyleSheet.create({
@@ -182,4 +161,4 @@ const style = StyleSheet.create({
     },
 });
 
-export default EditAccount;
+export default EditEvent;

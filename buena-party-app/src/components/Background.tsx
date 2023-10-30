@@ -25,7 +25,9 @@ const styles = StyleSheet.create({
     background: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        height: '100%',
+        overflow: 'scroll',
     },
 });
 

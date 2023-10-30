@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { createUserTable } = require('./models/userModel');
 const { registerUser, listUsers, updateUser, deleteUser } = require('./controllers/user/userController');
-const { listEvents, registerEvent, changeEvent, removeEvent } = require('./controllers/event/eventController')
+const { listEvents, registerEvent, changeEvent, removeEvent, showEvent } = require('./controllers/event/eventController')
 const cors = require('cors');
 const { login } = require('./controllers/user/authController');
 
@@ -30,6 +30,7 @@ server.put('/user/update/:id', updateUser);
 server.delete('/user/delete/:id', deleteUser);
 
 // Operações com Eventos
+server.get('/event/:id', showEvent)
 server.get('/events/list', listEvents);
 server.post('/event/register', registerEvent);
 server.put('/event/update/:id', changeEvent);

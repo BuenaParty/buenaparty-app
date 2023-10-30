@@ -7,6 +7,7 @@ import CreateEvent from './src/screens/CreateEvent';
 import HomeScreen from './src/screens/HomeScreen';
 import Register from './src/screens/Register';
 import ListEvents from './src/screens/ListEvents';
+import EditEvent from './src/screens/EditEvent';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -56,6 +57,14 @@ const App = () => {
           <Stack.Screen
             name="ListEvents"
             component={ListEvents}
+            options={{
+              headerShown: false,
+            }}
+          />
+
+          <Stack.Screen
+            name="EditEvent"
+            component={EditEvent}
             options={{
               headerShown: false,
             }}

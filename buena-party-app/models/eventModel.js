@@ -2,7 +2,7 @@ const db = require('../db');
 
 const createEventTable = () => {
     db.serialize(() => {
-        db.run('CREATE TABLE IF NOT EXISTS evento (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nome TEXT NOT NULL, endereco TEXT NOT NULL, data TEXT NOT NULL, horario TEXT NULL, criado_por INTEGER NOT NULL, FOREIGN KEY (criado_por) REFERENCES usuario (id))', (error) => {
+        db.run('CREATE TABLE IF NOT EXISTS evento (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nome TEXT NOT NULL, endereco TEXT NOT NULL, data TEXT NOT NULL, horario TEXT NOT NULL, criado_por INTEGER NOT NULL, FOREIGN KEY (criado_por) REFERENCES usuario (id))', (error) => {
             if (error) {
                 console.log(`Não foi possível criar a tabela "evento": ${error}`);
             } else {
@@ -18,6 +18,16 @@ const getEvents = (callback) => {
             callback(error, null);
         } else {
             callback(null, rows);
+        }
+    });
+};
+
+const getEventById = (eventId, callback) => {
+    db.get('SELECT * FROM evento WHERE id = ?', eventId, (error, row) => {
+        if (error) {
+            callback(error, null);
+        } else {
+            callback(null, row);
         }
     });
 };
@@ -81,4 +91,4 @@ const resetAutoIncrement = _ => {
     db.run('DELETE FROM sqlite_sequence WHERE name = "evento"');
 };
 
-module.exports = { createEventTable, getEvents, insertEvent, updateEvent, deleteEvent, resetAutoIncrement }; 
+module.exports = { createEventTable, getEvents, insertEvent, updateEvent, deleteEvent, resetAutoIncrement, getEventById }; 
