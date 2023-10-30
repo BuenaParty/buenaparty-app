@@ -22,24 +22,27 @@ interface EventBoxProps {
 const EventBox: React.FC<EventBoxProps> = ({ colors, style, children, iconSource, onPress }) => {
   return (
     <LinearGradient
-        colors={["#A12577", "#42286C"]}
-        style={styles.eventBoxBorder}
+      colors={["#A12577", "#42286C"]}
+      style={styles.eventBoxBorder}
     >
-        <View style={styles.eventBox}>
-            <View style={styles.eventBoxTitle}>
-                <GradientText style={styles.eventBoxText}>
-                    {children}
-                </GradientText>
-                <TouchableOpacity onPress={onPress}>
-                  <Images
-                      style={styles.iconEvent}   
-                      iconSource={iconSource} 
-                  />
-                </TouchableOpacity>
-            </View>
-            <Countdown colors={[]}></Countdown>
+      <View style={styles.eventBox}>
+        <View style={styles.eventBoxTitle}>
+          
+            <GradientText style={styles.eventBoxText}>
+              {children}
+            </GradientText>
+            <TouchableOpacity onPress={onPress}>
+              <Images
+                style={styles.iconEvent}
+                iconSource={iconSource}
+              />
+
+            </TouchableOpacity>
+        
         </View>
-    </LinearGradient>
+        <Countdown colors={[]}></Countdown>
+      </View>
+    </LinearGradient >
   );
 };
 
