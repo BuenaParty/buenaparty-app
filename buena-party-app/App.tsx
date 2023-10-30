@@ -9,7 +9,7 @@ import HomeScreens from './src/screens/HomeScreens';
 import CreateEvent from './src/screens/CreateEvent';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import EditEvent from './src/screens/EditEvent';
-import HomeScreens2 from './src/screens/HomeScreens2';
+import HomeScreens2 from './src/screens/ListEvents';
 ;
 const Stack = createNativeStackNavigator();
 
