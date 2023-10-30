@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Background from '../components/Background';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Images from '../components/Images';
 import NavBar from '../components/NavBar';
@@ -14,7 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 type CreateEventProps = {
   navigation: StackNavigationProp<any>;
 };
-
+const { width, height } = Dimensions.get('screen')
 const urlAPI = 'http://localhost:3000';
 
 const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
@@ -25,11 +25,19 @@ const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
   const [horario, setHorario] = useState('');
   const [mensagem, setMensagem] = useState('');
 
+  const handleGoBack = () => {
+    navigation.goBack();
+  }
+
   const handleSubmit = async () => {
+    if (!nome || !endereco || !data || !horario) {
+      setMensagem('Preencha todos os campos.');
+      return;
+    }
+
     try {
-      const userId = await AsyncStorage.getItem('idUser'); // Obtenha o userId do AsyncStorage
+      await AsyncStorage.getItem('idUser');
       const nomeUser = await AsyncStorage.getItem('nomeUser');
-      console.log(userId);
 
       const response = await axios.post(`${urlAPI}/event/register`, {
         nome: nome,
@@ -38,28 +46,46 @@ const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
         endereco: endereco,
         criado_por: nomeUser,
       });
-  
-      if (response.status === 201) {
+
+      if (response.status === 200) {
         setMensagem('Evento criado com sucesso!');
+        console.log('Evento criado com sucesso!');
         setNome('');
         setEndereco('');
         setHorario('');
         setData('');
-  
+
         setTimeout(() => {
-          navigation.navigate('HomeScreen');
-        }, 3000);
+          navigation.navigate('ListEvents');
+        }, 1000);
+      } else {
+        console.log('Error creating event:', response);
+        setMensagem('Erro ao registrar o evento. Verifique os campos preenchidos.');
       }
     } catch (error) {
       console.error('Erro ao registrar o evento:', error);
-      setMensagem('Erro ao registrar o evento. Verifique os campos preenchidos!');
+      setMensagem('Erro ao registrar o evento. Verifique os campos preenchidos.');
     }
   };
+
   
   return (
     <Background colors={[]} style={style.container}>
       <SafeAreaView style={style.main}>
-        <NavBar onPress={() => navigation.navigate('Home Screen')} />
+      <View style={style.boxImage}>
+          <TouchableOpacity onPress={handleGoBack}>
+            <Images
+              style={style.back}
+              iconSource={require('../../assets/icons/back.png')}
+            />
+          </TouchableOpacity>
+          <View style={style.LogoContainer}>
+            <Images
+              style={style.LogoBranca}
+              iconSource={require('../../assets/icons/LogoBranco.png')}
+            />
+          </View>
+        </View>
 
         <Text style={style.text}>Criar Evento</Text>
         <View style={style.form}>
@@ -94,10 +120,13 @@ const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
 
           <View style={style.button}>
             <GradientButtonM onPress={handleSubmit} colors={[]}>
-              <Text style={styles.gradientButtonMText}>Registrar Evento</Text>
+              <Text style={styles.gradientButtonMText}>Criar Evento</Text>
             </GradientButtonM>
 
-            {mensagem ? <Text style={style.mensagem}>{mensagem}</Text>: null}
+            {mensagem !== null && (
+              <Text style={style.mensagem}>{mensagem}</Text>
+            )}
+
           </View>
         </View>
       </SafeAreaView>
@@ -124,6 +153,8 @@ const style = StyleSheet.create({
   main: {
     position: 'absolute',
     top: 0,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   form: {
     top: 20,
@@ -135,6 +166,33 @@ const style = StyleSheet.create({
   mensagem: {
     color: 'green',
     marginTop: 10,
+  },
+  boxImage: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: width,
+    flex: 0.3,
+    marginBottom: 100,
+    paddingHorizontal: 10
+  },
+  LogoContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: 10,
+  },
+  LogoBranca: {
+    width: width / 4,
+    height: width / 4,
+    alignItems: 'center',
+    marginRight: width / 6,
+
+  },
+  back: {
+    width: width / 6,
+    height: width / 6,
+
   },
 });
 

@@ -141,13 +141,12 @@ const style = StyleSheet.create({
     justifyContent: 'space-between',
     width: width,
     flex: 0.3,
-    marginBottom: 60
-
+    marginBottom: 60,
+    paddingHorizontal: 10
   },
   LogoContainer: {
     flex: 1,
     alignItems: 'center',
-
   },
   Text: {
     color: 'white',

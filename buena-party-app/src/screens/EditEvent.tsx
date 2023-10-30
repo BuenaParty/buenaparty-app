@@ -51,6 +51,9 @@ const EditEvent: React.FC<EditEventProps> = ({ navigation, route }) => {
         fetchEventData();
     }, [eventId]);
  
+    const handleGoBack = () => {
+        navigation.goBack();
+    }
     
     const handleEdit = async () => {
         try {
@@ -68,13 +71,24 @@ const EditEvent: React.FC<EditEventProps> = ({ navigation, route }) => {
     };
 
     return (
-            <Background colors={[]} style={style.container}>
-                <SafeAreaView style={style.container}>
-                    <View style={style.boxImage}>
-                        {/* Código para navegar de volta para a tela de detalhes do evento */}
-                    </View>
-                    <Text style={{ fontSize: textSize, color: 'white', fontWeight: 'bold', marginBottom: 38 }}>Editar Evento</Text>
-                    <ScrollView contentContainerStyle={style.formBox}>
+            <Background colors={[]}>
+                <SafeAreaView style={style.main}>
+                <View style={style.boxImage}>
+                <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+                    <Images
+                    style={style.back}
+                    iconSource={require('../../assets/icons/back.png')}
+                    />
+                </TouchableOpacity>
+                <View style={style.LogoContainer}>
+                    <Images
+                    style={style.LogoBranca}
+                    iconSource={require('../../assets/icons/LogoBranco.png')}
+                    />
+                </View>
+                </View>
+                    <Text style={{ fontSize: textSize, color: 'white', fontWeight: 'bold', marginVertical: 50 }}>Editar Evento</Text>
+                    <View style={style.formBox}>
                         <FormBox
                             colors={[]}
                             placeholder={nome}
@@ -103,7 +117,7 @@ const EditEvent: React.FC<EditEventProps> = ({ navigation, route }) => {
                             onChange={text => setHorario(text)}
                             value={horario}
                         />
-                    </ScrollView>
+                    </View>
                     <View style={style.buttonContainer}>
                         <GradientButtonM onPress={handleEdit} colors={[]}>
                             <Text style={styles.gradientButtonMText}>Confirmar</Text>
@@ -121,30 +135,9 @@ const style = StyleSheet.create({
         alignItems: 'center',
         flex: 1
     },
-    boxImage: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        width: width,
-        marginBottom: 40
-    },
     text: {
         flex:2,
 
-    },
-    LogoContainer: {
-        flex: 1,
-        alignItems: 'center',
-    },
-    LogoBranco: {
-        width: width / 4,
-        height: width / 4,
-        alignItems: 'center',
-        marginRight: width / 6,
-    },
-    back: {
-        width: width / 6,
-        height: width / 6,
     },
     profile: {
         width: width / 4,
@@ -152,13 +145,45 @@ const style = StyleSheet.create({
         marginBottom: 25
     },
     formBox: {
-        alignItems: 'center',
-        flex:1
-        
+        marginTop: 10,
     },
     buttonContainer: {
-        marginTop: 0,
+        marginTop: 10,
     },
+    boxImage: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: width,
+        flex: 0.3,
+        marginBottom: 20,
+        paddingHorizontal: 10
+      },
+      LogoContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        top: 10,
+      },
+      LogoBranca: {
+        width: width / 4,
+        height: width / 4,
+        alignItems: 'center',
+        marginRight: width / 6,
+    
+      },
+      back: {
+        width: width / 6,
+        height: width / 6,
+    
+      },
+      main: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        top: 0,
+        position: 'absolute',
+      },
 });
 
 export default EditEvent;
