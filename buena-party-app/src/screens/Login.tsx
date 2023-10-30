@@ -44,12 +44,12 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
       });
 
       if (response.status === 200) {
-        console.log(response.data);
+        console.log(response.data.user.nome);
 
         // Armazene o token no AsyncStorage após um login bem-sucedido
         await AsyncStorage.setItem('authToken', response.data.token);
-        await AsyncStorage.setItem('idUser', response.data.id);
-        await AsyncStorage.setItem('nomeUser', response.data.nome);
+        await AsyncStorage.setItem('idUser', response.data.user.id);
+        await AsyncStorage.setItem('nomeUser', response.data.user.nome);
 
         navigation.navigate('HomeScreen');
 

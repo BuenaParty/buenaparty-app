@@ -1,9 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { createUserTable } = require('./models/userModel');
-const { registerUser, listUsers, updateUser, deleteUser } = require('./controllers/userController');
+const { registerUser, listUsers, updateUser, deleteUser } = require('./controllers/user/userController');
+const { listEvents, registerEvent, changeEvent, removeEvent } = require('./controllers/event/eventController')
 const cors = require('cors');
-const { login } = require('./controllers/authController');
+const { login } = require('./controllers/user/authController');
 
 const server = express();
 const port = 3000;
@@ -27,6 +28,12 @@ server.param('id', (req, res, next, id) => {
 
 server.put('/user/update/:id', updateUser);
 server.delete('/user/delete/:id', deleteUser);
+
+// Operações com Eventos
+server.get('/events/list', listEvents);
+server.post('/event/register', registerEvent);
+server.put('/event/update/:id', changeEvent);
+server.delete('/event/delete/:id', removeEvent);
 
 server.listen(port, () => { console.log(`O servidor Express está rodando em http://localhost:${port}`); });
 
