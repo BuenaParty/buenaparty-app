@@ -17,63 +17,78 @@ const App = () => {
   return (
 
 
-    <SafeAreaProvider>
-       <NavigationContainer>
-         <Stack.Navigator>
- 
-           <Stack.Screen
-             name="FirstScreen"
-             component={FirstScreen}
-             options={{
-               headerShown: false,
-             }}
-           />
-           <Stack.Screen
-             name="Login"
-             component={Login}
-             options={{
-               headerShown: false,
-             }}
-           />
-           <Stack.Screen
-             name="Register"
-             component={Register}
-             options={{
-               headerShown: false,
-             }}
-           />
-           <Stack.Screen
-           name="EditAccount"
-           component={EditAccount} // Adicione a tela EditAccount aqui
+    /* <SafeAreaProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+  
+            <Stack.Screen
+              name="FirstScreen"
+              component={FirstScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={Register}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+            name="EditAccount"
+            component={EditAccount} // Adicione a tela EditAccount aqui
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+           name="Home"
+           component={HomeScreens}
            options={{
              headerShown: false,
-           }}
-         />
-         <Stack.Screen
-          name="Home"
-          component={HomeScreens}
-          options={{
-            headerShown: false,
-          }} />
-          <Stack.Screen
-            name="EditEvent"
-            component={EditEvent}
-            options={{
-              headerShown: false,
-            }}
-          />
+           }} />
+           <Stack.Screen
+             name="EditEvent"
+             component={EditEvent}
+             options={{
+               headerShown: false,
+             }}
+           />
+           <Stack.Screen
+             name="CreateEvent"
+             component={CreateEvent}
+             options={{
+               headerShown: false,
+             }}
+           />
+  
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>*/
+
+
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+
           <Stack.Screen
             name="CreateEvent"
-            component={CreateEvent}
+            component={HomeScreens2}
             options={{
               headerShown: false,
             }}
           />
- 
-         </Stack.Navigator>
-       </NavigationContainer>
-     </SafeAreaProvider>
-   
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider >
   )
 };
 

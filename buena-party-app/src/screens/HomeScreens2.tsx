@@ -12,6 +12,9 @@ import axios, { AxiosResponse } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Images from '../components/Images';
 
+const baseTextSize = 29;
+const screen = Dimensions.get('screen');
+const textSize = (screen.width * 0.2 * baseTextSize) / 100;
 type Event = {
     id: number;
     criado_por: number;
@@ -67,51 +70,55 @@ const HomeScreens2: React.FC<HomeScreens2Props> = ({ navigation }) => {
                         />
                     </View>
                 </View>
+                <ScrollView>
                 <View style={style.container}>
                     <View style={style.buttonContainer}>
                         <GradientButtonS colors={[]} onPress={() => navigation.navigate('Create Event')}>
                             <Text style={styles.gradientButtonSText}>Criar evento</Text>
                         </GradientButtonS>
-                        <View style={{marginRight:20}}></View>
+                        <View style={{ marginRight: 20 }}></View>
                         <GradientButtonS colors={[]} onPress={() => navigation.navigate('Create Event')}>
                             <Text style={styles.gradientButtonSText}>Entrar em evento</Text>
                         </GradientButtonS>
                     </View>
-                    <View style={style.eventContainer}>
-                        <Text style={style.text}>Meus Eventos</Text>
-                        {userEvents.length > 0 ? (
-                            userEvents.map((event) => (
-                                <View key={event.id} style={style.eventBox}>
-                                    <EventBox colors={[]} onPress={() => navigation.navigate('Manage Event')} iconSource={require('../../assets/icons/settings.png')}>
-                                        <GradientText style={styles.eventBoxText}>{event.nome}</GradientText>
-                                        <Text>Data: {event.data}</Text>
-                                        <Text>Hora: {event.hora}</Text>
-                                        <Text>Endereço: {event.endereço}</Text>
-                                    </EventBox>
-                                </View>
-                            ))
-                        ) : (
-                            <Text style={style.noEventsText}>Você não tem eventos.</Text>
-                        )}
-                        <Text style={style.text}>Eventos convidados</Text>
-                        <View style={style.eventBox}>
+                    <View >
+                        <View style={style.eventContainer2}>
+                            <Text style={style.text}>Meus Eventos</Text>
+                            {userEvents.length > 0 ? (
+                                userEvents.map((event) => (
+                                    <View key={event.id} style={style.eventBox}>
+                                        <EventBox colors={[]} onPress={() => navigation.navigate('Manage Event')} iconSource={require('../../assets/icons/settings.png')}>
+                                            <GradientText style={styles.eventBoxText}>{event.nome}</GradientText>
+                                            <Text>Data: {event.data}</Text>
+                                            <Text>Hora: {event.hora}</Text>
+                                            <Text>Endereço: {event.endereço}</Text>
+                                        </EventBox>
+                                    </View>
+                                ))
+                            ) : (
+                                <Text style={style.noEventsText}>Você não tem eventos.</Text>
+                            )}
+                            <Text style={style.text}>Eventos convidados</Text>
+                            <View style={style.eventBox}>
                             <EventBox colors={[]} onPress={() => navigation.navigate('Event Details')} iconSource={require('../../assets/icons/more.png')}>
-                                <GradientText style={styles.eventBoxText}>Casamento de Ana!</GradientText>
-                            </EventBox>
+                                    <GradientText style={styles.eventBoxText}>Casamento de Ana!</GradientText>
+                                </EventBox>
+                            </View>
                         </View>
                     </View>
                 </View>
+                </ScrollView>
             </SafeAreaView>
         </Background>
     );
 };
 
 const style = StyleSheet.create({
-    main:{
-        flex:1
+    main: {
+        flex: 1
     },
-    container:{
-        flex:1
+    container: {
+        flex: 1
     },
     boxImage: {
         flexDirection: 'row-reverse',
@@ -136,12 +143,33 @@ const style = StyleSheet.create({
         height: width / 6,
 
     },
-    buttonContainer:{
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'center'
-        
+    buttonContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+
     },
+    eventContainer2: {
+        width:width/1
+    },
+    text:{
+        color:'white',
+        fontSize:textSize,
+        fontWeight:'bold',
+        textAlign:'center'
+    },
+    eventBox:{
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    noEventsText:{
+        color:'white',
+        fontSize:textSize,
+        fontWeight:'bold',
+        textAlign:'center'
+    },
+   
+    
 });
 
 export default HomeScreens2;

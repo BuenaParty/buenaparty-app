@@ -1,5 +1,12 @@
 import { StyleSheet,Dimensions} from "react-native";
 const{width,height} = Dimensions.get('screen')
+const baseTextSize = 30;
+const baseTextSize2 = 22;
+const baseTextSize3 = 40;
+const screen = Dimensions.get('screen');
+const textSize = (screen.width * 0.3 * baseTextSize) / 100;
+const textSize22 = (screen.width * 0.3 * baseTextSize2) / 100;
+const textSize40 = (screen.width * 0.3 * baseTextSize3) / 100;
 const styles = StyleSheet.create({
 
     /*BOTÕES GRADIENTE*/
@@ -158,8 +165,8 @@ const styles = StyleSheet.create({
     
     //EVENT BOX
     eventBoxBorder: {
-        height: 180,
-        width: 340,
+        height: height/4,
+        width: width/1.1,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
@@ -168,8 +175,8 @@ const styles = StyleSheet.create({
     eventBox: {
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
-        height: 175,
-        width: 335,
+        height: height/4,
+        width: width/1.1,
         borderRadius: 15,
         margin: 10,
         justifyContent: 'space-evenly',
@@ -179,9 +186,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
+        textAlign:'center',
+
     },
     eventBoxText: {
-        fontSize: 30,
+        fontSize: textSize,
         fontFamily: 'Strong',
         fontWeight: 'bold',
         marginLeft: 15,
@@ -210,8 +219,8 @@ const styles = StyleSheet.create({
         marginLeft: 15,
     },
     iconEvent: {
-        width: 30,
-        height: 30,
+        width:width/11,
+        height: height/19,
         marginRight: 15,
     },
     iconEventDark: {
@@ -220,8 +229,8 @@ const styles = StyleSheet.create({
         marginRight: 15,
     },
     countdownBoxBorder: {
-        height: 60,
-        width: 40,
+        height: height/10,
+        width: width/9,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
@@ -232,8 +241,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#D3D3D3',
-        height: 55,
-        width: 35,
+        height: height/11,
+        width: width/10,
         borderRadius: 15,
     },
     countdownBoxDark: {
@@ -258,17 +267,18 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         backgroundColor: 'transparent',
         borderRadius: 15,
-        margin: 10,
+        margin:0 ,
+        flex:1
     },
     countdownText: {
-        fontSize: 22,
+        fontSize: textSize22,
         fontWeight: 'bold',
     },
     countdownBottom: {
-
+        flex:1
     },
     divider: {
-        fontSize: 40,
+        fontSize: textSize40,
         bottom: 18,
     },
 
