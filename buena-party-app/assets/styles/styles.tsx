@@ -1,5 +1,5 @@
-import { StyleSheet,Dimensions} from "react-native";
-const{width,height} = Dimensions.get('screen')
+import { StyleSheet, Dimensions } from "react-native";
+const { width, height } = Dimensions.get('screen')
 const baseTextSize = 30;
 const baseTextSize2 = 22;
 const baseTextSize3 = 40;
@@ -16,9 +16,9 @@ const styles = StyleSheet.create({
     /*BOTÕES GRADIENTE*/
 
     gradientButtonL: {
-        
-        width:width/1.2,
-        height:height/11,
+
+        width: width / 1.2,
+        height: height / 11,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     gradientButtonM: {
         //height: 70,
         //width: 220,
-        width:width/1.8,
-        height:width/5,
+        width: width / 2,
+        height: height / 9,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
@@ -43,13 +43,13 @@ const styles = StyleSheet.create({
     },
     gradientButtonMText: {
         fontFamily: 'Strong',
-        fontSize: 22,
+        fontSize: textSize22,
         fontWeight: 'bold',
         color: '#FFFFFF'
     },
     gradientButtonS: {
-        height:height/11,
-        width: width/3,
+        height: height / 11,
+        width: width / 3,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
@@ -65,19 +65,18 @@ const styles = StyleSheet.create({
     /*BOTÕES PRETOS*/
 
     blackButtonBorder: {
-        height: height/9.3,
-        width:width/2.8,
+        height: height/12,
+        width: width / 2,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
     },
     blackButtonText: {
-        padding: 18,
         textAlign: 'center',
         flex: 0,
         color: '#A12577',
-        width: width/2.9,
-        height:height/9.6,
+        width: width / 2.1,
+        padding:height*0.02,
         borderRadius: 13,
         backgroundColor: '#000000',
         fontFamily: 'Strong',
@@ -85,8 +84,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     blackButton: {
-        height: 70,
-        width: 220,
+        height: height / 12,
+        width: width / 2,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
@@ -98,8 +97,8 @@ const styles = StyleSheet.create({
     formBoxBorder: {
         //height: 70,
         //width: 320,
-        width:width/1.23,
-        height:height/10,
+        width: width / 1.23,
+        height: height / 10,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
@@ -110,8 +109,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
-        width:width/1.25,
-        height:height/11,
+        width: width / 1.25,
+        height: height / 11,
         borderRadius: 15,
         margin: 10,
 
@@ -138,39 +137,39 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         position: 'relative',
-       
+
 
     },
     back: {
         right: 120,
-        top:30,
+        top: 30,
     },
-   
+
 
     //NAV BAR2
-    boxImage2:{
+    boxImage2: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         width: width,
         marginBottom: 40
-        
+
     },
-    profile:{
+    profile: {
         width: width / 6,
         height: width / 6,
     },
-    LogoBranca:{
+    LogoBranca: {
         width: width / 4,
         height: width / 4,
         alignItems: 'center',
         marginRight: width / 6,
     },
-    
+
     //EVENT BOX
     eventBoxBorder: {
-        height: height/4,
-        width: width/1.1,
+        height: height / 4,
+        width: width / 1.1,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
@@ -179,8 +178,8 @@ const styles = StyleSheet.create({
     eventBox: {
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
-        height: height/4,
-        width: width/1.1,
+        height: height / 4,
+        width: width / 1.1,
         borderRadius: 15,
         margin: 10,
         justifyContent: 'space-evenly',
@@ -190,7 +189,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        textAlign:'center',
+        textAlign: 'center',
 
     },
     eventBoxText: {
@@ -223,8 +222,8 @@ const styles = StyleSheet.create({
         marginLeft: 15,
     },
     iconEvent: {
-        width:width/11,
-        height: height/19,
+        width: width / 11,
+        height: height / 19,
         marginRight: 15,
     },
     iconEventDark: {
@@ -233,8 +232,8 @@ const styles = StyleSheet.create({
         marginRight: 15,
     },
     countdownBoxBorder: {
-        height: height/10,
-        width: width/9,
+        height: height / 10,
+        width: width / 9,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
@@ -245,8 +244,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#D3D3D3',
-        height: height/11,
-        width: width/10,
+        height: height / 11,
+        width: width / 10,
         borderRadius: 15,
     },
     countdownBoxDark: {
@@ -271,15 +270,15 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         backgroundColor: 'transparent',
         borderRadius: 15,
-        margin:0 ,
-        flex:1
+        margin: 0,
+        flex: 1
     },
     countdownText: {
         fontSize: textSize22,
         fontWeight: 'bold',
     },
     countdownBottom: {
-        flex:1
+        flex: 1
     },
     divider: {
         fontSize: textSize40,
@@ -334,38 +333,38 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-      },
-      background: {
+    },
+    background: {
         borderRadius: 15,
-        width: width/1.9,
-      },
-      header: {
+        width: width / 1.9,
+    },
+    header: {
         margin: 2,
-        padding: width/22,
+        padding: width / 22,
         backgroundColor: '#FFFFFF',
         borderRadius: 15,
-      },
-      headerExpanded: {
+    },
+    headerExpanded: {
         margin: 2,
-        padding: width/30,
+        padding: width / 30,
         backgroundColor: '#D3D3D3',
         borderRadius: 15,
-        width:width/1.9,
-      },
-      headerText: {
+        width: width / 1.9,
+    },
+    headerText: {
         fontSize: textSize20,
         width: '100%',
-      },
-      content: {
+    },
+    content: {
         backgroundColor: '#FFFFFF',
         borderRadius: 15,
         margin: 2,
-      },
-      headerTextExpanded: {
+    },
+    headerTextExpanded: {
         fontSize: textSize20,
         width: '100%',
         color: '#FFFFFF',
-      },
+    },
 });
 
 export default styles;

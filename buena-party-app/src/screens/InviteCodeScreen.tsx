@@ -16,6 +16,9 @@ type InviteCodeScreenProps = {
 };
 const { width, height } = Dimensions.get('screen')
 
+const baseTextSize = 20;
+const textSize = (screen.width * 0.3 * baseTextSize) / 100;
+
 const InviteCodeScreen: React.FC<InviteCodeScreenProps> = ({ navigation }) => {
     return (
         <Background colors={[]}>
@@ -35,43 +38,46 @@ const InviteCodeScreen: React.FC<InviteCodeScreenProps> = ({ navigation }) => {
                     </View>
                 </View>
                 <Text style={style.text}>Gerar código de convite</Text>
-                <View style={style.code}>
+                {/*<View style={style.code}>
                     <InviteCode colors={[]} />
-                </View>
-                <View style={style.smallButtons}>
-                    <GradientButtonS onPress={() => navigation.navigate('Edit Event')} colors={[]} style={{ flexDirection: 'row' }}>
-                        <Text style={[styles.gradientButtonSText, { width: '40%' }]}>
-                            Copiar código
+                </View>*/ }
+                <View style={style.box}>
+                    <View style={style.smallButtons}>
+                        <GradientButtonS onPress={() => navigation.navigate('Edit Event')} colors={[]} style={{ flexDirection: 'row' }}>
+                            <Text style={[styles.gradientButtonSText, { width: '40%' }]}>
+                                Copiar código
 
-                        </Text>
-                        <Image
-                            style={styles.imageCode}
-                            source={require('../../assets/icons/copy.png')}
-                        />
-                    </GradientButtonS>
-                    <GradientButtonS onPress={() => navigation.navigate('Edit Event')} colors={[]} style={{ flexDirection: 'row' }}>
-                        <Text style={[styles.gradientButtonSText, { width: '40%' }]}>
-                            Enviar código
+                            </Text>
+                            <Image
+                                style={styles.imageCode}
+                                source={require('../../assets/icons/copy.png')}
+                            />
+                        </GradientButtonS>
+                        <View style={{ margin: 16 }}></View>
+                        <GradientButtonS onPress={() => navigation.navigate('Edit Event')} colors={[]} style={{ flexDirection: 'row' }}>
+                            <Text style={[styles.gradientButtonSText, { width: '40%' }]}>
+                                Enviar código
 
-                        </Text>
-                        <Image
-                            style={styles.imageCode}
-                            source={require('../../assets/icons/share.png')}
-                        />
-                    </GradientButtonS>
-                </View>
-                <View style={style.mediumButtons}>
-                    <GradientButtonM colors={[]} onPress={[]}>
-                        <Text style={styles.gradientButtonMText}>
-                            Confirmar
-                        </Text>
-                    </GradientButtonM>
-                    <BlackButton onPress={[]} colors={[]} style={styles.blackButton}>
-                        <Text style={styles.blackButtonText}>Deletar Evento</Text>
-                    </BlackButton>
+                            </Text>
+                            <Image
+                                style={styles.imageCode}
+                                source={require('../../assets/icons/share.png')}
+                            />
+                        </GradientButtonS>
+                    </View>
+                    <View >
+                        <GradientButtonM colors={[]} onPress={[]}>
+                            <Text style={styles.gradientButtonMText}>
+                                Confirmar
+                            </Text>
+                        </GradientButtonM>
+                        <BlackButton onPress={[]} colors={[]} style={styles.blackButton}>
+                            <Text style={styles.blackButtonText}>Deletar Evento</Text>
+                        </BlackButton>
+                    </View>
                 </View>
             </SafeAreaView>
-        </Background>
+        </Background >
     )
 }
 const style = StyleSheet.create({
@@ -108,6 +114,24 @@ const style = StyleSheet.create({
         alignItems: 'center',
         top: 0,
         position: 'absolute',
+        
+    },
+    smallButtons: {
+        flexDirection: 'row',
+        alignItems:'center',
+        bottom:'14%'
+
+    },
+    text: {
+        color: 'white',
+        fontSize: textSize,
+        fontWeight: 'bold'
+    },
+    box:{
+        alignItems:'center',
+        justifyContent:'center',
+        width:width,
+        height:height,
     },
 });
 export default InviteCodeScreen;
