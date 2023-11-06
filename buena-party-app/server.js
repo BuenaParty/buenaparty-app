@@ -35,7 +35,7 @@ server.get('/events/list', listEvents);
 server.post('/event/register', registerEvent);
 server.put('/event/update/:id', changeEvent);
 server.delete('/event/delete/:id', removeEvent);
-server.get('/events/byuser/:userId', listById)
+server.get('/events/byuser/:userId', listById);
 
 server.listen(port, () => { console.log(`O servidor Express está rodando em http://localhost:${port}`); });
 

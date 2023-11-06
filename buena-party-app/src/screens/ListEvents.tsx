@@ -33,6 +33,7 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
   const [events, setEvents] = useState<Event[]>([]);
   const [eventToDelete, setEventToDelete] = useState<Event | null>(null);
   const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
+  const [renderKey, setRenderKey] = useState(0);
 
   const showDeleteConfirmation = (event: Event) => {
     setEventToDelete(event);
@@ -61,11 +62,14 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
     
         if (loggedInUserId) {
           const response = await axios.get(`${urlAPI}/events/byuser/${loggedInUserId}`);
-          console.log('Response:', response.data);
+          console.log('API response:', response.data)
     
           if (response.status === 200) {
-            console.log('Response data:', response.data);
+            console.log('Response status:', response.status);
+            console.log(response.data)
             setEvents(response.data.events);
+            setRenderKey((prevKey) => prevKey + 1)
+
           } else {
             console.log('Nenhum evento encontrado.');
           }
@@ -78,6 +82,7 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
     };
 
     loadEvents();
+
   }, []);
 
   const handleDeleteEvent = async (eventId) => {

@@ -33,7 +33,7 @@ const getEventById = (eventId, callback) => {
 };
 
 const getEventByUserId = (userId, callback) => {
-    db.get('SELECT * FROM evento WHERE criado_por = ?', userId, (error, row) => {
+    db.all('SELECT * FROM evento WHERE criado_por = ?', userId, (error, row) => {
         if (error) {
             callback(error, null);
         } else {

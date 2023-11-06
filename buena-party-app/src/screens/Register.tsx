@@ -8,6 +8,7 @@ import FormBox from '../components/FormBox';
 import GradientButtonM from '../components/GradientButtonM';
 import styles from '../../assets/styles/styles';
 import { StackNavigationProp } from '@react-navigation/stack';
+import ProfileImagePicker from '../components/ImagePicker';
 
 import axios from 'axios';
 const { width, height } = Dimensions.get('screen');
@@ -17,7 +18,7 @@ const urlAPI = 'http://localhost:3000';
 type RegisterProps = {
     navigation: StackNavigationProp<any>;
 };
-
+  
 const Register: React.FC<RegisterProps> = ({ navigation }) => {
     const [nome, setNome] = useState('');
     const [telefone, setTelefone] = useState('');
@@ -107,9 +108,9 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
                 <View>
                     <Text style={style.text}>Bem Vindo à BUENAPARTY!</Text>
                 </View>
-                <TouchableOpacity>
+                {/*<TouchableOpacity>
                     <Images style={style.profile} iconSource={require('../../assets/icons/perfil.png')} />
-                </TouchableOpacity>
+    </TouchableOpacity>*/}
                 <ScrollView contentContainerStyle={style.formBox}>
                     <FormBox
                         colors={[]}
@@ -185,20 +186,19 @@ const style = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 1
+        flex: 1,
     },
     boxImage: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         width: width,
-        marginBottom: 20
+        marginBottom: 20,
     },
     text: {
         color: 'white',
         fontSize: 25,
         fontWeight:'bold'
-
     },
     LogoContainer: {
         flex: 1,
@@ -220,9 +220,9 @@ const style = StyleSheet.create({
     },
     formBox: {
         alignItems: 'center',
+        marginVertical: 40,
     },
     buttonContainer: {
-        marginTop: 0,
     },
     error: {
         color: 'green',
