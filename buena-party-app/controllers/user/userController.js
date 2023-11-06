@@ -3,6 +3,7 @@ const { insertUser, getUsers, changeUser, removeUser, resetAutoIncrement } = req
 const registerUser = (req, res) => {
     const user = req.body;
 
+    
     insertUser(user, (error) => {
         if (error) {
             res.status(500).json({ error: `Erro ao registrar o usuário ${user.nome}: ${error}` });

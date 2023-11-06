@@ -24,8 +24,49 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
+    const [senhaValida, setSenhaValida] = useState(true);
+    const [emailValido, setEmailValido] = useState(true);
+    const [senhasIguais, setSenhasIguais] = useState(true);
+
+    const isEmailValid = (email) => {
+        // validação de formato do email
+        const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+        return emailRegex.test(email);
+    };
+
+    const isSenhaValida = (senha) => {
+        // validação de senha com pelo menos 8 caracteres incluindo letras e numeros
+        const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        return senhaRegex.test(senha);
+    };
 
     const handleSubmit = async () => {
+        if (!isEmailValid(email)) {
+            // Email inválido
+            setEmailValido(false);
+            console.log('Email inválido');
+            return;
+        } else {
+            setEmailValido(true);
+        }
+
+        if (!isSenhaValida(senha)) {
+            // Senha inválida
+            setSenhaValida(false);
+            console.log('Senha inválida. A senha deve conter pelo menos 8 caracteres com letras e números.');
+            return;
+        } else {
+            setSenhaValida(true);
+        }
+
+        if (senha !== confirmarSenha) {
+            // Senha e confirmação de senha não coincidem
+            setSenhasIguais(false);
+            return;
+        } else {
+            setSenhasIguais(true);
+        }
+
         try {
             const response = await axios.post(`${urlAPI}/user/register`, {
                 nome: nome,
@@ -35,6 +76,9 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
             });
 
             if (response.data) {
+                setSenhaValida(true);
+                setEmailValido(true);
+                setSenhasIguais(true);
                 console.log(response.data);
                 navigation.navigate('Login');
             }
@@ -85,23 +129,43 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
                         colors={[]}
                         placeholder="Email"
                         iconSource={require('../../assets/icons/email.png')}
-                        onChange={text => setEmail(text)}
+                        onChange={(text) => {
+                            setEmail(text);
+                            setEmailValido(true); // Redefina a validação do campo de email
+                        }}
                         value={email}
                     />
                     <FormBox
                         colors={[]}
                         placeholder="Senha"
                         iconSource={require('../../assets/icons/password.png')}
-                        onChange={text => setSenha(text)}
+                        onChange={(text) => {
+                            setSenha(text);
+                            setSenhaValida(true); // Redefina a validação do campo de senha
+                        }}
                         value={senha}
+                        type="password"
                     />
                     <FormBox
                         colors={[]}
                         placeholder="Confirmar Senha"
                         iconSource={require('../../assets/icons/password.png')}
-                        onChange={text => setConfirmarSenha(text)}
+                        onChange={(text) => {
+                            setConfirmarSenha(text);
+                            setSenhasIguais(true); // Redefina a validação de senhas iguais
+                        }}
                         value={confirmarSenha}
+                        type="password"
                     />
+                    {senhaValida ? null : (
+                        <Text style={style.error}>A senha deve conter pelo menos 8 caracteres com letras e números.</Text>
+                    )}
+                    {senhasIguais ? null : (
+                        <Text style={style.error}>As senhas não coincidem. Por favor, tente novamente.</Text>
+                    )}
+                    {emailValido ? null : (
+                        <Text style={style.error}>Por favor, insira um e-mail válido.</Text>
+                    )}
                 </ScrollView>
                 <View style={style.buttonContainer}>
                     <GradientButtonM onPress={handleSubmit} colors={[]}>
@@ -160,6 +224,10 @@ const style = StyleSheet.create({
     buttonContainer: {
         marginTop: 0,
     },
+    error: {
+        color: 'green',
+        paddingHorizontal: 50,
+      },
 });
 
 export default Register;

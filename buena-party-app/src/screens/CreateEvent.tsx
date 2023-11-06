@@ -36,7 +36,7 @@ const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
     }
 
     try {
-      await AsyncStorage.getItem('idUser');
+      const idUser = await AsyncStorage.getItem('idUser');
       const nomeUser = await AsyncStorage.getItem('nomeUser');
 
       const response = await axios.post(`${urlAPI}/event/register`, {
@@ -44,7 +44,7 @@ const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
         data: data,
         horario: horario,
         endereco: endereco,
-        criado_por: nomeUser,
+        criado_por: idUser,
       });
 
       if (response.status === 200) {

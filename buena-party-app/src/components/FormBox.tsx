@@ -16,9 +16,10 @@ interface FormBoxProps {
   iconSource: { uri: string } | number;
   onChange: (value: string) => void; // Atualizado para receber o valor como argumento
   value: string;
+  type?: string;
 }
 
-const FormBox: React.FC<FormBoxProps> = ({ colors, style, placeholder, children, iconSource, onChange, value}) => {
+const FormBox: React.FC<FormBoxProps> = ({ colors, style, placeholder, children, iconSource, onChange, value, type }) => {
 
   const handleInputChange = (text: string) => {
     onChange(text); // Chama a função onChange passando o valor do campo de entrada
@@ -34,6 +35,7 @@ const FormBox: React.FC<FormBoxProps> = ({ colors, style, placeholder, children,
           placeholder={placeholder}
           onChangeText={handleInputChange} // Use onChangeText para capturar as alterações no texto
           value={value} // Passe o valor como propriedade value
+          secureTextEntry={type === 'password'}
         />
       </View>
     </LinearGradient>

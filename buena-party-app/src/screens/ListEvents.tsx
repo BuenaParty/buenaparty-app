@@ -12,6 +12,7 @@ import { Alert } from 'react-native';
 import Modal from 'react-native-modal';
 import { Button } from 'react-native-paper';
 import Images from '../components/Images';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Event = {
   id: number;
@@ -54,13 +55,22 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
   useEffect(() => {
     const loadEvents = async () => {
       try {
-        const response = await axios.get(`${urlAPI}/events/list`);
-        console.log('Response:', response.data);
-
-        if (response.status === 200) {
-          setEvents(response.data.result);
+        // Retrieve the user's ID from AsyncStorage
+        const loggedInUserId = await AsyncStorage.getItem('idUser');
+        console.log(loggedInUserId)
+    
+        if (loggedInUserId) {
+          const response = await axios.get(`${urlAPI}/events/byuser/${loggedInUserId}`);
+          console.log('Response:', response.data);
+    
+          if (response.status === 200) {
+            console.log('Response data:', response.data);
+            setEvents(response.data.events);
+          } else {
+            console.log('Nenhum evento encontrado.');
+          }
         } else {
-          console.log('Nenhum evento encontrado.');
+          console.log('User ID not found in AsyncStorage.');
         }
       } catch (error) {
         console.error('Erro ao buscar eventos:', error);
@@ -114,19 +124,18 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
                   <Text style={style.text}>Data: {event.data}</Text>
                   <Text style={style.text}>Hora: {event.horario}</Text>
                   <Text style={style.text}>Endereço: {event.endereco}</Text>
-                  <Text style={style.text}>Criado por: {event.criado_por}</Text>
                   <View style={style.buttonContainer}>
                     <GradientButtonS colors={[]} onPress={() => navigation.navigate('EditEvent', { eventId: event.id })}>
                     <Text style={styles.gradientButtonSText}>Editar evento</Text>
                     </GradientButtonS>
                     <GradientButtonS
-                colors={[]}
-                onPress={() => showDeleteConfirmation(event)}
-              >
-                <Text style={styles.gradientButtonSText}>Deletar evento</Text>
-              </GradientButtonS>
-            </View>
-          </View>
+                      colors={[]}
+                      onPress={() => showDeleteConfirmation(event)}
+                    >
+                      <Text style={styles.gradientButtonSText}>Deletar evento</Text>
+                    </GradientButtonS>
+                  </View>
+              </View>
         ))
       ) : (
         <Text style={style.noEventsText}>Nenhum evento encontrado.</Text>

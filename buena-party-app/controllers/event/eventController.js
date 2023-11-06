@@ -1,4 +1,4 @@
-const { getEvents, insertEvent, updateEvent, deleteEvent, resetAutoIncrement, getEventById } = require('../../models/eventModel');
+const { getEvents, insertEvent, updateEvent, deleteEvent, resetAutoIncrement, getEventById, getEventByUserId } = require('../../models/eventModel');
 
 const listEvents = (req, res) => {
     getEvents((error, result) => {
@@ -23,6 +23,20 @@ const showEvent = (req, res) => {
         }
     });
 }
+
+const listById = (req, res) => {
+    const userId = req.params.userId; // Assuming you extract the user ID from the URL parameters
+
+    getEventByUserId(userId, (error, events) => {
+        if (error) {
+            res.status(500).json({ error: 'Erro interno no servidor' });
+        } else if (!events || events.length === 0) {
+            res.status(404).json({ error: 'Nenhum evento encontrado para o usuário' });
+        } else {
+            res.status(200).json({ events });
+        }
+    });
+};
 
 const registerEvent = (req, res) => {
     const event = req.body;
@@ -62,4 +76,4 @@ const removeEvent = (req, res) => {
     })
 }
 
-module.exports = { listEvents, registerEvent, changeEvent, removeEvent, showEvent };
+module.exports = { listEvents, registerEvent, changeEvent, removeEvent, showEvent, listById };

@@ -101,6 +101,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
             iconSource={require('../../assets/icons/password.png')}
             onChange={(text) => setSenha(text)}
             value={senha}
+            type="password"
           ></FormBox>
           <TouchableOpacity>
             <Text style={style.Senha}>Esqueceu a senha?</Text>

@@ -32,6 +32,16 @@ const getEventById = (eventId, callback) => {
     });
 };
 
+const getEventByUserId = (userId, callback) => {
+    db.get('SELECT * FROM evento WHERE criado_por = ?', userId, (error, row) => {
+        if (error) {
+            callback(error, null);
+        } else {
+            callback(null, row);
+        }
+    });
+};
+
 const insertEvent = (event, callback) => {
     const { nome, endereco, data, horario, criado_por } = event;
 
@@ -91,4 +101,4 @@ const resetAutoIncrement = _ => {
     db.run('DELETE FROM sqlite_sequence WHERE name = "evento"');
 };
 
-module.exports = { createEventTable, getEvents, insertEvent, updateEvent, deleteEvent, resetAutoIncrement, getEventById }; 
+module.exports = { createEventTable, getEvents, insertEvent, updateEvent, deleteEvent, resetAutoIncrement, getEventById, getEventByUserId }; 
