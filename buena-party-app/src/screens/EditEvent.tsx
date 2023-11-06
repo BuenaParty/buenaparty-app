@@ -74,7 +74,7 @@ const EditEvent: React.FC<EditEventProps> = ({ navigation, route }) => {
             <Background colors={[]}>
                 <SafeAreaView style={style.main}>
                 <View style={style.boxImage}>
-                <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+                <TouchableOpacity onPress={handleGoBack}>
                     <Images
                     style={style.back}
                     iconSource={require('../../assets/icons/back.png')}

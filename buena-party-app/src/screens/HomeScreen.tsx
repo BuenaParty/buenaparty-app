@@ -14,20 +14,19 @@ import FirstScreen from './FirstScreen';
 import CreateEvent from './CreateEvent';
 import ListEvents from './ListEvents';
 
+const { width, height } = Dimensions.get('screen')
+
 type HomeScreenProps = {
   navigation: StackNavigationProp<any>;
 };
 
-const { width, height } = Dimensions.get('screen')
-
-const HomeScreen: React.FC<HomeScreenProps> = ({ }) => {
+const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
   const navigation = useNavigation();
   const [userName, setUserName] = useState('');
-  const [logoutButtonVisible, setLogoutButtonVisible] = React.useState(false);
+
   const handleLogout = async () => {
     // Remova o token do AsyncStorage ao fazer logout
     await AsyncStorage.removeItem('authToken');
-    setLogoutButtonVisible(false);
     navigation.navigate('FirstScreen');
   }
 

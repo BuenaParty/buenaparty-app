@@ -18,7 +18,7 @@ const { width, height } = Dimensions.get('screen');
 const screen = Dimensions.get('screen');
 const textSize = (screen.width * 0.2 * baseTextSize) / 100;
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
+const HomeScreens: React.FC<HomeScreenProps> = ({ navigation }) => {
     const [userName, setUserName] = useState('');
 
     useEffect(() => {
@@ -140,4 +140,4 @@ const style = StyleSheet.create({
     },
 });
 
-export default HomeScreen;
+export default HomeScreens;

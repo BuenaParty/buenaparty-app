@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from '../../assets/styles/styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import GradientButtonS from '../components/GradientButtonS';
+import GradientButtonM from '../components/GradientButtonM';
 import EventBox from '../components/EventBox';
 import GradientText from '../components/GradientText';
 import axios, { AxiosResponse } from 'axios';
@@ -23,6 +24,7 @@ type Event = {
   endereco: string;
 };
 const { width, height } = Dimensions.get('screen')
+
 type ListEventsProps = {
   navigation: StackNavigationProp<any>;
 };
@@ -82,8 +84,8 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
     };
 
     loadEvents();
-
-  }, []);
+    
+  }, [events]);
 
   const handleDeleteEvent = async (eventId) => {
     try {
@@ -139,6 +141,11 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
                     >
                       <Text style={styles.gradientButtonSText}>Deletar evento</Text>
                     </GradientButtonS>
+                  </View>
+                  <View style={style.buttonContainer}>
+                    <GradientButtonM onPress={() => navigation.navigate('Guests')} colors={[]} >
+                        <Text style={styles.gradientButtonLText}>Convidados</Text>
+                    </GradientButtonM>
                   </View>
               </View>
         ))
@@ -202,6 +209,7 @@ const style = StyleSheet.create({
   },
   eventBox: {
     padding: 20,
+    marginHorizontal: 20,
   },
   noEventsText: {
     color: '#fff',

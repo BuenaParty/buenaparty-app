@@ -9,6 +9,7 @@ import GuestsBox from "../components/GuestsBox";
 import GradientButtonL from "../components/GradientButtonL";
 import Images from "../components/Images";
 import { ScrollView } from "react-native-gesture-handler";
+import axios from "axios";
 
 type GuestsProps = {
     navigation: StackNavigationProp<any>;
@@ -17,9 +18,13 @@ const { width, height } = Dimensions.get('screen')
 
 const Guests: React.FC<GuestsProps> = ({ navigation }) => {
 
+    const handleGoBack = () => {
+        navigation.goBack();
+      }
+
     /*const [guestData, setGuestData] = useState<
     { key: string; name: string; email: string; telephone: string }[]
-  >([]);*/
+  >([]);
 
     const guestData = [
         {
@@ -35,13 +40,13 @@ const Guests: React.FC<GuestsProps> = ({ navigation }) => {
             phone: "987-654-3210",
         },
 
-    ];
+    ];*/
 
     return (
         <Background colors={[]} >
             <SafeAreaView style={style.main}>
                 <View style={style.boxImage}>
-                    <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+                    <TouchableOpacity onPress={handleGoBack}>
                         <Images
                             style={style.back}
                             iconSource={require('../../assets/icons/back.png')}
@@ -55,18 +60,18 @@ const Guests: React.FC<GuestsProps> = ({ navigation }) => {
                     </View>
                 </View>
                 <Text style={style.text}>Convidados</Text>
-                <GradientButtonL colors={[]} onPress={() => navigation.navigate('Invite Code')} style={style.buttons}>
+                <GradientButtonL colors={[]} onPress={() => navigation.navigate('InviteCode')} style={style.buttons}>
                     <Text style={styles.gradientButtonLText}>Gerar código de convite</Text>
                 </GradientButtonL>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
 
-                    {guestData.map((guest) => (
+                    {/*{guestData.map((guest) => (
                         <GuestsBox
                             key={guest.key}
                             data={[guest]}
                         />
                     ))}
-
+                    */}
 
 
 

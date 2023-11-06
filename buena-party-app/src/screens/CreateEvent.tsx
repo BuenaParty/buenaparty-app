@@ -35,6 +35,8 @@ const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
       return;
     }
 
+  
+    
     try {
       const idUser = await AsyncStorage.getItem('idUser');
       const nomeUser = await AsyncStorage.getItem('nomeUser');
@@ -56,7 +58,7 @@ const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
         setData('');
 
         setTimeout(() => {
-          navigation.navigate('ListEvents');
+          navigation.navigate('ListEvents', { refresh: true });
         }, 1000);
       } else {
         console.log('Error creating event:', response);
@@ -105,10 +107,11 @@ const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
           />
           <FormBox
             colors={[]}
-            placeholder='(YYYY-MM-DD)'
+            placeholder='Data'
             iconSource={require('../../assets/icons/date.png')}
             onChange={text => setData(text)} 
-            value={data} 
+            value={data}
+            maskType='date'
           />
           <FormBox
             colors={[]}
@@ -116,6 +119,7 @@ const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
             iconSource={require('../../assets/icons/hour.png')}
             onChange={text => setHorario(text)}
             value={horario} 
+            maskType={'time'}
           />
 
           <View style={style.button}>

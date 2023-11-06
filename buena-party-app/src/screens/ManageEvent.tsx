@@ -43,7 +43,7 @@ const ManageEvent: React.FC<ManageEventProps> = ({ navigation }) => {
                     <GradientButtonL onPress={() => navigation.navigate('Guests')} colors={[]} style={style.convidados}>
                         <Text style={styles.gradientButtonLText}>Convidados</Text>
                     </GradientButtonL>
-                    <GradientButtonL onPress={() => navigation.navigate('Edit Event')} colors={[]} style={style.Edit}>
+                    <GradientButtonL onPress={() => navigation.navigate('EditEvent')} colors={[]} style={style.Edit}>
                         <Text style={styles.gradientButtonLText}>Editar Informações</Text>
                     </GradientButtonL>
                     <BlackButton onPress={[]} colors={[]} style={style.blackButton}>

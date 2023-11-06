@@ -125,6 +125,7 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
                         iconSource={require('../../assets/icons/phone.png')}
                         onChange={text => setTelefone(text)}
                         value={telefone}
+                        maskType={'cel-phone'}
                     />
                     <FormBox
                         colors={[]}

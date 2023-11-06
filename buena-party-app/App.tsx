@@ -11,14 +11,39 @@ import EditEvent from './src/screens/EditEvent';
 import ManageEvent from './src/screens/ManageEvent';
 import Guests from './src/screens/Guest';
 import InviteCodeScreen from './src/screens/InviteCodeScreen';
+import React, { useState, useEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+
+  /*const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if the user is logged in
+    checkUserAuthentication();
+  }, []);
+
+  const checkUserAuthentication = async () => {
+    // Check if the user is logged in (e.g., by verifying an auth token)
+    const authToken = await AsyncStorage.getItem('authToken');
+    setUserIsLoggedIn(!!authToken); // Set userIsLoggedIn based on the presence of an authToken
+  };*/
+
   return (
-   /* <SafeAreaProvider>
+   <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
-
+          {/*{userIsLoggedIn ? (
+            <Stack.Screen
+              name="HomeScreen"
+              component={HomeScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+          ) : (
           <Stack.Screen
             name="FirstScreen"
             component={FirstScreen}
@@ -26,6 +51,21 @@ const App = () => {
               headerShown: false,
             }}
           />
+          )}*/}
+          <Stack.Screen
+            name="FirstScreen"
+            component={FirstScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+              name="HomeScreen"
+              component={HomeScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
           <Stack.Screen
             name="Login"
             component={Login}
@@ -50,21 +90,12 @@ const App = () => {
           />
 
           <Stack.Screen
-            name="HomeScreen"
-            component={HomeScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-
-          <Stack.Screen
             name="ListEvents"
             component={ListEvents}
             options={{
               headerShown: false,
             }}
           />
-
           <Stack.Screen
             name="EditEvent"
             component={EditEvent}
@@ -72,21 +103,28 @@ const App = () => {
               headerShown: false,
             }}
           />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider >*/
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-
-
           <Stack.Screen
-            name="EditEvent"
+            name="InviteCode"
             component={InviteCodeScreen}
             options={{
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="ManageEvent"
+            component={ManageEvent}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Guests"
+            component={Guests}
+            options={{
+              headerShown: false,
+            }}
+          />
+          
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider >
