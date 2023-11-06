@@ -3,10 +3,14 @@ const{width,height} = Dimensions.get('screen')
 const baseTextSize = 30;
 const baseTextSize2 = 22;
 const baseTextSize3 = 40;
+const baseTextSize4 = 24;
+const baseTextSize5 = 20;
 const screen = Dimensions.get('screen');
 const textSize = (screen.width * 0.3 * baseTextSize) / 100;
 const textSize22 = (screen.width * 0.3 * baseTextSize2) / 100;
 const textSize40 = (screen.width * 0.3 * baseTextSize3) / 100;
+const textSize25 = (screen.width * 0.2 * baseTextSize4) / 100;
+const textSize20 = (screen.width * 0.2 * baseTextSize5) / 100;
 const styles = StyleSheet.create({
 
     /*BOTÕES GRADIENTE*/
@@ -61,8 +65,8 @@ const styles = StyleSheet.create({
     /*BOTÕES PRETOS*/
 
     blackButtonBorder: {
-        height: 70,
-        width: 220,
+        height: height/9.3,
+        width:width/2.8,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
@@ -72,12 +76,12 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         flex: 0,
         color: '#A12577',
-        width: 215,
-        height: 65,
+        width: width/2.9,
+        height:height/9.6,
         borderRadius: 13,
         backgroundColor: '#000000',
         fontFamily: 'Strong',
-        fontSize: 24,
+        fontSize: textSize25,
         fontWeight: 'bold',
     },
     blackButton: {
@@ -333,23 +337,23 @@ const styles = StyleSheet.create({
       },
       background: {
         borderRadius: 15,
-        width: 320,
+        width: width/1.9,
       },
       header: {
         margin: 2,
-        padding: 22,
+        padding: width/22,
         backgroundColor: '#FFFFFF',
         borderRadius: 15,
       },
       headerExpanded: {
         margin: 2,
-        padding: 10,
+        padding: width/30,
         backgroundColor: '#D3D3D3',
         borderRadius: 15,
-        width: 316,
+        width:width/1.9,
       },
       headerText: {
-        fontSize: 20,
+        fontSize: textSize20,
         width: '100%',
       },
       content: {
@@ -358,7 +362,7 @@ const styles = StyleSheet.create({
         margin: 2,
       },
       headerTextExpanded: {
-        fontSize: 20,
+        fontSize: textSize20,
         width: '100%',
         color: '#FFFFFF',
       },

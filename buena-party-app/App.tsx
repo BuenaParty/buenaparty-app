@@ -8,11 +8,14 @@ import HomeScreen from './src/screens/HomeScreen';
 import Register from './src/screens/Register';
 import ListEvents from './src/screens/ListEvents';
 import EditEvent from './src/screens/EditEvent';
+import ManageEvent from './src/screens/ManageEvent';
+import Guests from './src/screens/Guest';
+import InviteCodeScreen from './src/screens/InviteCodeScreen';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <SafeAreaProvider>
+   /* <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
 
@@ -65,6 +68,21 @@ const App = () => {
           <Stack.Screen
             name="EditEvent"
             component={EditEvent}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider >*/
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+
+
+          <Stack.Screen
+            name="EditEvent"
+            component={InviteCodeScreen}
             options={{
               headerShown: false,
             }}
