@@ -42,10 +42,10 @@ const FirstScreen: React.FC<FirstScreenProps> = ({ navigation }) => {
           <Logo style={style.Logo} iconSource={require('../../assets/icons/LogoGradiente.png')} />
 
           <GradientButtonL colors={[]} onPress={() => navigation.navigate('Login')} >
-            <Text >Entrar</Text>
+            <Text style={style.text}>Entrar</Text>
           </GradientButtonL>
           <GradientButtonL colors={[]} onPress={() => navigation.navigate('Register')}>
-            <Text >Cadastrar</Text>
+            <Text style={style.text}>Cadastrar</Text>
           </GradientButtonL>
 
           {logoutButtonVisible && (
@@ -74,8 +74,14 @@ const style = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     marginTop:30
-  }
-
+  },
+  text: {
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
 });
 
 export default FirstScreen;

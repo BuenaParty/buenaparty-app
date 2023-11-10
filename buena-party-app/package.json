@@ -19,6 +19,7 @@
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
+    "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "expo": "~49.0.13",
     "expo-app-loading": "^2.1.1",
@@ -50,7 +51,8 @@
     "react-native-text-gradient": "^0.1.7",
     "react-native-web": "~0.19.6",
     "react-text-mask": "^5.5.0",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

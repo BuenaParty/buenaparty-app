@@ -34,12 +34,22 @@ const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
       setMensagem('Preencha todos os campos.');
       return;
     }
-
-  
     
     try {
       const idUser = await AsyncStorage.getItem('idUser');
       const nomeUser = await AsyncStorage.getItem('nomeUser');
+
+      const uuid = require('uuid');
+
+      function generateShortUuid() {
+        const fullUuid = uuid.v4();
+        const shortUuid = fullUuid.replace(/-/g, '').substring(0, 6);
+
+        return shortUuid;
+      }
+
+      const codigoConvite = generateShortUuid();
+      console.log('Unique Code:', codigoConvite);
 
       const response = await axios.post(`${urlAPI}/event/register`, {
         nome: nome,
@@ -47,6 +57,7 @@ const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
         horario: horario,
         endereco: endereco,
         criado_por: idUser,
+        codigo_convite: codigoConvite,
       });
 
       if (response.status === 200) {
@@ -63,6 +74,7 @@ const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
       } else {
         console.log('Error creating event:', response);
         setMensagem('Erro ao registrar o evento. Verifique os campos preenchidos.');
+
       }
     } catch (error) {
       console.error('Erro ao registrar o evento:', error);

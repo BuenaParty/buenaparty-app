@@ -20,11 +20,16 @@ const baseTextSize = 20;
 const textSize = (screen.width * 0.3 * baseTextSize) / 100;
 
 const InviteCodeScreen: React.FC<InviteCodeScreenProps> = ({ navigation }) => {
+
+    const handleGoBack = () => {
+        navigation.goBack();
+      }
+
     return (
         <Background colors={[]}>
             <SafeAreaView style={style.main}>
                 <View style={style.boxImage}>
-                    <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+                    <TouchableOpacity onPress={handleGoBack}>
                         <Images
                             style={style.back}
                             iconSource={require('../../assets/icons/back.png')}

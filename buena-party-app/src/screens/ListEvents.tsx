@@ -64,7 +64,6 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
     
         if (loggedInUserId) {
           const response = await axios.get(`${urlAPI}/events/byuser/${loggedInUserId}`);
-          console.log('API response:', response.data)
     
           if (response.status === 200) {
             console.log('Response status:', response.status);
@@ -146,7 +145,7 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
                     <GradientButtonM onPress={() => navigation.navigate('Guests')} colors={[]} >
                         <Text style={styles.gradientButtonLText}>Convidados</Text>
                     </GradientButtonM>
-                  </View>
+              </View>
               </View>
         ))
       ) : (

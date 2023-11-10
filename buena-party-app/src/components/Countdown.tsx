@@ -1,33 +1,49 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState, useEffect } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   View,
-  Image,
   ViewStyle,
-  StyleSheet,
-  Text
+  StyleSheet
 } from 'react-native';
 import styles from '../../assets/styles/styles';
 import GradientText from './GradientText';
-import Images from './Images';
 
 interface CountdownProps {
   colors: string[];
   style?: ViewStyle;
-  children?: ReactNode;
+  eventDateTime: Date;
 }
 
-const Countdown: React.FC<CountdownProps> = ({ colors, style, children }) => {
+const Countdown: React.FC<CountdownProps> = ({ colors, style, eventDateTime }) => {
+    const [time, setTime] = useState({ days: 0, hours: 0, minutes: 0});
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            const now = new Date();
+            const timeDifference = eventDateTime.getTime() - now.getTime();
+
+            if (timeDifference > 0) {
+                const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+                setTime({ days, hours, minutes });
+            } else {
+                clearInterval(intervalId);
+                setTime({ days: 0, hours: 0, minutes: 0 });
+            }
+        }, 1000);
+
+        return () => clearInterval(intervalId);
+    }, [eventDateTime]);
+
   return (
     <View style={styles.countdownContainer}>
         <View style={styles.countdown}>
             <View style={styles.countdownTop}>
-                <LinearGradient
-                    colors={["#A12577", "#42286C"]}
-                    style={styles.countdownBoxBorder}
-                >
+                <LinearGradient colors={["#A12577", "#42286C"]} style={styles.countdownBoxBorder}>
                     <View style={styles.countdownBox}>
-                        
+                        <GradientText>{String(time.days).padStart(2, '0')}</GradientText>
                     </View>
                 </LinearGradient>
                 <LinearGradient
