@@ -13,6 +13,8 @@ import Guests from './src/screens/Guest';
 import InviteCodeScreen from './src/screens/InviteCodeScreen';
 import React, { useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import EnterEvent from './src/screens/EnterEvent';
+import EventInfo from './src/screens/EventInfo';
 
 const Stack = createNativeStackNavigator();
 
@@ -54,12 +56,12 @@ const App = () => {
           )}*/}
           <Stack.Screen
             name="FirstScreen"
-            component={FirstScreen}
+            component={EventInfo}
             options={{
               headerShown: false,
             }}
           />
-          <Stack.Screen
+          {/*<Stack.Screen
               name="HomeScreen"
               component={HomeScreen}
               options={{
@@ -123,7 +125,7 @@ const App = () => {
             options={{
               headerShown: false,
             }}
-          />
+          />*/ }
           
         </Stack.Navigator>
       </NavigationContainer>

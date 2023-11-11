@@ -201,8 +201,8 @@ const styles = StyleSheet.create({
     eventBoxDark: {
         alignItems: 'center',
         backgroundColor: "rgba(255,255,255,0.12)",
-        height: 150,
-        width: 350,
+        height: height/4,
+        width: width/1.05,
         borderRadius: 15,
         margin: 10,
         justifyContent: 'space-evenly',
@@ -212,11 +212,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-end',
-        width: '100%',
-        height: '10%',
+        width: width/1.1,
+        height: height/23,
     },
     eventBoxTextDark: {
-        fontSize: 30,
+        fontSize: textSize25,
         fontFamily: 'Strong',
         fontWeight: 'bold',
         marginLeft: 15,
@@ -227,8 +227,8 @@ const styles = StyleSheet.create({
         marginRight: 15,
     },
     iconEventDark: {
-        width: 25,
-        height: 25,
+        width: width/19,
+        height: height/25,
         marginRight: 15,
     },
     countdownBoxBorder: {
@@ -252,8 +252,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#131313',
-        height: 55,
-        width: 35,
+        height: height/11,
+        width: width/10,
         borderRadius: 15,
     },
     countdownTop: {
