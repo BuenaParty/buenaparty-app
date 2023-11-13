@@ -124,7 +124,7 @@ const InviteCodeScreen: React.FC<InviteCodeScreenProps> = ({ navigation }) => {
                         </GradientButtonS>
                     </View>
                     <View style={style.box} >
-                        <GradientButtonM colors={[]} onPress={[]}>
+                        <GradientButtonM colors={[]} onPress={handleGoBack}>
                             <Text style={styles.gradientButtonMText}>
                                 Confirmar
                             </Text>
