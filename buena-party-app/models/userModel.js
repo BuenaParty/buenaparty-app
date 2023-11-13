@@ -34,6 +34,16 @@ const getUsers = (callback) => {
     });
 };
 
+const getUserById = (userId, callback) => {
+    db.get('SELECT * FROM usuario WHERE id = ?', userId, (error, row) => {
+        if (error) {
+            callback(error, null);
+        } else {
+            callback(null, row);
+        }
+    });
+};
+
 const changeUser = (userId, updatedUser, callback) => {
     const { nome, e_mail, senha, telefone } = updatedUser;
 
@@ -81,4 +91,4 @@ const resetAutoIncrement = _ => {
     db.run('DELETE FROM sqlite_sequence WHERE name = "usuario"');
 }
 
-module.exports = { createUserTable, insertUser, getUsers, changeUser, removeUser, resetAutoIncrement };
+module.exports = { createUserTable, insertUser, getUsers, changeUser, removeUser, resetAutoIncrement, getUserById };

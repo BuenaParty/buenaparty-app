@@ -1,4 +1,4 @@
-const { insertUser, getUsers, changeUser, removeUser, resetAutoIncrement } = require('../../models/userModel');
+const { insertUser, getUsers, changeUser, removeUser, resetAutoIncrement, getUserById } = require('../../models/userModel');
 
 const registerUser = (req, res) => {
     const user = req.body;
@@ -22,6 +22,20 @@ const listUsers = (req, res) => {
         }
     });
 };
+
+const showUser = (req, res) => {
+    const userId = req.params.id; // Obtém o ID do usuário da URL
+
+    getUserById(userId, (error, user) => {
+        if (error) {
+            res.status(500).json({ error: 'Erro ao buscar usuário.' });
+        } else if (!user) {
+            res.status(404).json({ error: 'Usuário não encontrado.' });
+        } else {
+            res.status(200).json(user);
+        }
+    });
+}
 
 const updateUser = (req, res) => {
     const userId = req.params.id;
@@ -49,4 +63,4 @@ const deleteUser = (req, res) => {
     })
 }
 
-module.exports = { registerUser, listUsers, updateUser, deleteUser };
+module.exports = { registerUser, listUsers, updateUser, deleteUser, showUser };

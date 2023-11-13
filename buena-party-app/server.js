@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { createUserTable } = require('./models/userModel');
-const { registerUser, listUsers, updateUser, deleteUser } = require('./controllers/user/userController');
-const { listEvents, registerEvent, changeEvent, removeEvent, showEvent, listById, enterEvent, listGuests, removeGuest, showInviteCode } = require('./controllers/event/eventController')
+const { registerUser, listUsers, updateUser, deleteUser, showUser } = require('./controllers/user/userController');
+const { listEvents, registerEvent, changeEvent, removeEvent, showEvent, listById, enterEvent, listGuests, removeGuest, showInviteCode, showByCode } = require('./controllers/event/eventController')
 const cors = require('cors');
 const { login } = require('./controllers/user/authController');
 
@@ -18,6 +18,7 @@ createUserTable();
 // Operações com os usuários
 server.post('/user/register', registerUser);
 server.get('/users', listUsers);
+server.get('/user/:id', showUser)
 
 server.post('/user/login', login);
 
@@ -42,6 +43,7 @@ server.get('/event/:id/code', showInviteCode)
 server.get('/event/guests/:id', listGuests);
 server.delete('/event/guest/:eventId/:userId', removeGuest);
 server.post('/event/enter', enterEvent);
+server.get('/event/byCode/:codigo_convite', showByCode);
 
 server.listen(port, () => { console.log(`O servidor Express está rodando em http://localhost:${port}`); });
 

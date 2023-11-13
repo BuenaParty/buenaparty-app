@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
-        margin: 1,
+        margin: 5,
     },
     codeBox: {
         flexDirection: 'row',
@@ -323,11 +323,20 @@ const styles = StyleSheet.create({
     },
     textCode: {
         fontFamily: 'Strong',
+        fontSize: 10,
+        fontWeight: 'bold',
+        color: '#FFFFFF',
+        textAlign: 'center',
+        textTransform: 'uppercase',
+    },
+    textCodeEnter: {
+        fontFamily: 'Strong',
         fontSize: 28,
         fontWeight: 'bold',
         color: '#FFFFFF',
         textAlign: 'center',
         textTransform: 'uppercase',
+        overflow: 'hidden',
     },
 
     //GUESTS BOX

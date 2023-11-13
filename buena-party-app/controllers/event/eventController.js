@@ -1,4 +1,17 @@
-const { getEvents, insertEvent, updateEvent, deleteEvent, resetAutoIncrement, getEventById, getEventByUserId, addGuestToEvent, getGuestsByEventId, removeGuestFromEvent, getInviteCodeByEventId } = require('../../models/eventModel');
+const { 
+    getEvents, 
+    insertEvent, 
+    updateEvent, 
+    deleteEvent, 
+    resetAutoIncrement, 
+    getEventById, 
+    getEventByUserId, 
+    addGuestToEvent, 
+    getGuestsByEventId, 
+    removeGuestFromEvent, 
+    getInviteCodeByEventId, 
+    getEventByInviteCode 
+} = require('../../models/eventModel');
 
 const listEvents = (req, res) => {
     getEvents((error, result) => {
@@ -51,6 +64,20 @@ const listById = (req, res) => {
             res.status(404).json({ error: 'Nenhum evento encontrado para o usuário' });
         } else {
             res.status(200).json({ events });
+        }
+    });
+};
+
+const showByCode = (req, res) => {
+    const codigo_convite = req.params.codigo_convite; // 
+
+    getEventByInviteCode(codigo_convite, (error, event) => {
+        if (error) {
+            res.status(500).json({ error: 'Erro interno no servidor' });
+        } else if (!event) {
+            res.status(404).json({ error: 'Nenhum evento encontrado para o código de convite' });
+        } else {
+            res.status(200).json({ event });
         }
     });
 };
@@ -148,4 +175,16 @@ const removeEvent = (req, res) => {
     })
 }
 
-module.exports = { listEvents, registerEvent, changeEvent, removeEvent, showEvent, listById, enterEvent, listGuests, removeGuest, showInviteCode };
+module.exports = { 
+    listEvents, 
+    registerEvent, 
+    changeEvent, 
+    removeEvent, 
+    showEvent, 
+    listById, 
+    enterEvent, 
+    listGuests, 
+    removeGuest, 
+    showInviteCode,
+    showByCode
+ };

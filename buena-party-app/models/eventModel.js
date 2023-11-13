@@ -54,6 +54,16 @@ const getInviteCodeByEventId = (eventId, callback) => {
     });
 };
 
+const getEventByInviteCode = (codigo_convite, callback) => {
+    db.get('SELECT * FROM evento WHERE codigo_convite = ?', codigo_convite, (error, row) => {
+        if (error) {
+            callback(error, null);
+        } else {
+            callback(null, row);
+        }
+    });
+};
+
 const getEventByUserId = (userId, callback) => {
     db.all('SELECT * FROM evento WHERE criado_por = ?', userId, (error, row) => {
         if (error) {
@@ -166,4 +176,18 @@ const resetAutoIncrement = _ => {
     db.run('DELETE FROM sqlite_sequence WHERE name = "evento"');
 };
 
-module.exports = { createEventTable, getEvents, insertEvent, updateEvent, deleteEvent, resetAutoIncrement, getEventById, getEventByUserId, addGuestToEvent, getGuestsByEventId, removeGuestFromEvent, getInviteCodeByEventId }; 
+module.exports = { 
+    createEventTable, 
+    getEvents, 
+    insertEvent, 
+    updateEvent, 
+    deleteEvent, 
+    resetAutoIncrement, 
+    getEventById, 
+    getEventByUserId, 
+    addGuestToEvent, 
+    getGuestsByEventId, 
+    removeGuestFromEvent, 
+    getInviteCodeByEventId,
+    getEventByInviteCode
+}; 
