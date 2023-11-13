@@ -58,7 +58,7 @@ const App = () => {
           )}*/}
           <Stack.Screen
             name="FirstScreen"
-            component={EnterEvent}
+            component={FirstScreen}
             options={{
               headerShown: false,
             }}
