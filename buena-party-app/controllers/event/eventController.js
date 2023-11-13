@@ -10,7 +10,8 @@ const {
     getGuestsByEventId, 
     removeGuestFromEvent, 
     getInviteCodeByEventId, 
-    getEventByInviteCode 
+    getEventByInviteCode,
+    getEventsByGuest 
 } = require('../../models/eventModel');
 
 const listEvents = (req, res) => {
@@ -96,22 +97,20 @@ const registerEvent = (req, res) => {
 }
 
 const enterEvent = (req, res) => {
-    const inviteCode = req.body.inviteCode;
+    const codigo_convite = req.body.codigo_convite;
     const userId = req.body.userId;
 
     // Verifica se o código de convite é válido
-    getEventByInviteCode(inviteCode, (error, event) => {
+    getEventByInviteCode(codigo_convite, (error, event) => {
         if (error) {
             res.status(500).json({ error: `Erro interno no servidor: ${error}` });
         } else if (!event) {
             res.status(404).json({ error: 'Evento não encontrado com o código de convite fornecido.' });
-        } else if (event.convidado_id) {
-            res.status(403).json({ error: 'Este convite já foi utilizado.' });
         } else {
-            // Marca o evento como utilizado pelo usuário atual
+            // Adiciona o usuário como convidado ao evento
             addGuestToEvent(event.id, userId, (updateError) => {
                 if (updateError) {
-                    res.status(500).json({ error: `Erro ao marcar o convite como utilizado: ${updateError}` });
+                    res.status(500).json({ error: `Erro ao adicionar o convidado ao evento: ${updateError}` });
                 } else {
                     // Lógica adicional para processar a entrada no evento (por exemplo, redirecionar para a página do evento)
                     res.status(200).json({ message: 'Entrou no evento com sucesso!', event });
@@ -120,6 +119,7 @@ const enterEvent = (req, res) => {
         }
     });
 };
+
 
 const listGuests = (req, res) => {
     const eventId = req.params.id;
@@ -148,6 +148,22 @@ const removeGuest = (req, res) => {
         }
     });
 };
+
+const listByGuest = (req, res) => {
+    const userId = req.params.id; // Assuming you extract the user ID from the URL parameters
+  
+    getEventsByGuest(userId, (error, events) => {
+        if (error) {
+            console.error(`Erro ao obter eventos para o usuário ${userId}: ${error}`);
+            res.status(500).json({ error: 'Erro interno ao obter eventos' });
+        } else if (!events || events.length === 0) {
+            console.log(`Nenhum evento encontrado para o usuário ${userId}`);
+            res.status(404).json({ error: 'Nenhum evento encontrado para o usuário' });
+        } else {
+            res.status(200).json({ events });
+        }
+    });
+  };
 
 const changeEvent = (req, res) => {
     const eventId = req.params.id;
@@ -186,5 +202,6 @@ module.exports = {
     listGuests, 
     removeGuest, 
     showInviteCode,
-    showByCode
+    showByCode,
+    listByGuest
  };

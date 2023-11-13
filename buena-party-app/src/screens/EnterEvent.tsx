@@ -60,7 +60,22 @@ type EnterEventProps = {
   
         if (response.ok) {
           console.log('Código correto! Redirecionando para detalhes do evento.');
-          navigation.navigate('EventInfo');
+
+          const userId = await AsyncStorage.getItem('idUser');
+
+          const enterEventResponse = await axios.post(`${urlAPI}/event/enter`, {
+            codigo_convite: codigoConvite,
+            userId: userId,
+          });
+          
+          if (enterEventResponse.status === 200) {
+            console.log('Entrou no evento com sucesso!', enterEventResponse.data);
+            // Lógica adicional ou navegação pode ser adicionada aqui
+            navigation.navigate('EventInfo');
+          } else {
+            console.log('Erro ao entrar no evento:', enterEventResponse.data);
+            // Manipule o erro conforme necessário
+          }
         } else {
           console.log('Nenhum evento encontrado para o código digitado. Tente novamente.');
           alert('Nenhum evento encontrado para o código digitado. Tente novamente.');
@@ -110,7 +125,7 @@ type EnterEventProps = {
                     </View>
                 <View style={style.button}>
                     <GradientButtonM onPress={checkInviteCode} colors={[]}>
-                        <Text style={styles.gradientButtonMText}>Gerar QR Code</Text>
+                        <Text style={styles.gradientButtonMText}>Entrar em evento</Text>
                     </GradientButtonM>
                 </View>
             </SafeAreaView>

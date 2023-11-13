@@ -11,12 +11,20 @@ import Images from '../components/Images';
 
 type EventInfoProps = {
     navigation: StackNavigationProp<any>;
+    route: {
+        params: {
+            eventName: string;
+        };
+    };
 };
+
 const { width, height } = Dimensions.get('screen')
 const baseTextSize = 25;
 const textSize = (screen.width * 0.3 * baseTextSize) / 100;
 
-const EventInfo: React.FC<EventInfoProps> = ({ navigation }) => {
+const EventInfo: React.FC<EventInfoProps> = ({ navigation, route }) => {
+    const { eventName } = route.params;
+    
     return (
         <Background colors={[]} style={style.container}>
             <SafeAreaView style={style.main}>
@@ -35,18 +43,18 @@ const EventInfo: React.FC<EventInfoProps> = ({ navigation }) => {
                     </View>
                 </View>
                 <Text style={style.text}>
-                    Casamento de Ana
+                    {eventName}
                 </Text>
                 <View style={style.box}>
-                    <EventBoxDark
+                    {/*<EventBoxDark
                         colors={[]}
                         iconSource={require('../../assets/icons/more.png')}
                         onPress={() => navigation.navigate('Event Details')}
-                    />
+    />*/}
                     <View style={style.qrCodeBox}>
 
                     </View>
-                    <View style={{ flex: 1, justifyContent: 'center' }}>
+                    <View style={{ flex: 1, justifyContent: 'center'}}>
                         {/* Adicionando GradientButtonL abaixo */}
                         <GradientButtonL
                             colors={[]}

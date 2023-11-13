@@ -3,7 +3,7 @@ const db = require('../db');
 const createEventTable = () => {
     
     db.serialize(() => {
-        db.run('CREATE TABLE IF NOT EXISTS evento (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nome TEXT NOT NULL, endereco TEXT NOT NULL, data DATE NOT NULL, horario TIME NOT NULL, criado_por INTEGER NOT NULL, codigo_convite TEXT UNIQUE, convidado_id INTEGER, FOREIGN KEY (criado_por) REFERENCES usuario (id), FOREIGN KEY (convidado_id) REFERENCES usuario (id))', (error) => {
+        db.run('CREATE TABLE IF NOT EXISTS evento (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nome TEXT NOT NULL, endereco TEXT NOT NULL, data DATE NOT NULL, horario TIME NOT NULL, criado_por INTEGER NOT NULL, codigo_convite TEXT UNIQUE, FOREIGN KEY (criado_por) REFERENCES usuario (id))', (error) => {
             if (error) {
                 console.log(`Não foi possível criar a tabela "evento": ${error}`);
             } else {
@@ -100,7 +100,7 @@ const insertEvent = (event, callback) => {
 };
 
 const addGuestToEvent = (eventId, userId, callback) => {
-    db.run('UPDATE evento SET convidado_id = ? WHERE id = ?', [userId, eventId], (error) => {
+    db.run('INSERT INTO convidados (evento_id, convidado_id) VALUES (?, ?)', [eventId, userId], (error) => {
         if (error) {
             callback(error);
         } else {
@@ -109,8 +109,24 @@ const addGuestToEvent = (eventId, userId, callback) => {
     });
 };
 
+const getEventsByGuest = (userId, callback) => {
+    console.log(`Procurando eventos para o usuário com ID ${userId}`);
+
+    db.all('SELECT e.* FROM evento e INNER JOIN convidados c ON e.id = c.evento_id WHERE c.convidado_id = ?', userId, (error, rows) => {
+        if (error) {
+            console.error(`Erro ao obter eventos para o usuário ${userId}: ${error}`);
+            callback(error, null);
+        } else {
+            console.log(`Eventos encontrados para o usuário ${userId}:`, rows);
+            callback(null, rows);
+        }
+    });
+};
+
+
+
 const getGuestsByEventId = (eventId, callback) => {
-    db.all('SELECT u.* FROM usuario u INNER JOIN evento e ON u.id = e.convidado_id WHERE e.id = ?', eventId, (error, rows) => {
+    db.all('SELECT u.* FROM usuario u INNER JOIN convidados c ON u.id = c.convidado_id WHERE c.evento_id = ?', eventId, (error, rows) => {
         if (error) {
             callback(error, null);
         } else {
@@ -189,5 +205,6 @@ module.exports = {
     getGuestsByEventId, 
     removeGuestFromEvent, 
     getInviteCodeByEventId,
-    getEventByInviteCode
+    getEventByInviteCode,
+    getEventsByGuest
 }; 

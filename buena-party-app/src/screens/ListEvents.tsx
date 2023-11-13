@@ -35,7 +35,7 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
   const [events, setEvents] = useState<Event[]>([]);
   const [eventToDelete, setEventToDelete] = useState<Event | null>(null);
   const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
-  const [renderKey, setRenderKey] = useState(0);
+  const [guestEvents, setGuestEvents] = useState<Event[]>([]);
 
   const showDeleteConfirmation = (event: Event) => {
     setEventToDelete(event);
@@ -58,19 +58,29 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
   useEffect(() => {
     const loadEvents = async () => {
       try {
-        // Retrieve the user's ID from AsyncStorage
         const loggedInUserId = await AsyncStorage.getItem('idUser');
-    
+        
+        console.log('Logged In User ID:', loggedInUserId);
+  
         if (loggedInUserId) {
-          const response = await axios.get(`${urlAPI}/events/byuser/${loggedInUserId}`);
-    
-          if (response.status === 200) {
-            
-            console.log(response.data)
-            setEvents(response.data.events);
-
+          const userEventsResponse = await axios.get(`${urlAPI}/events/byuser/${loggedInUserId}`);
+  
+          console.log('User Events Response:', userEventsResponse.data);
+  
+          if (userEventsResponse.status === 200 && userEventsResponse.data && userEventsResponse.data.events) {
+            setEvents(userEventsResponse.data.events);
           } else {
-            console.log('Nenhum evento encontrado.');
+            console.log('Nenhum evento criado pelo usuário encontrado.');
+          }
+  
+          const guestEventsResponse = await axios.get(`${urlAPI}/event/guest/${loggedInUserId}`);
+  
+          console.log('Guest Events Response:', guestEventsResponse.data);
+  
+          if (guestEventsResponse.status === 200 && guestEventsResponse.data && guestEventsResponse.data.events) {
+            setGuestEvents(guestEventsResponse.data.events);
+          } else {
+            console.log('Nenhum evento em que o usuário é convidado foi encontrado.');
           }
         } else {
           console.log('User ID not found in AsyncStorage.');
@@ -79,9 +89,9 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
         console.error('Erro ao buscar eventos:', error);
       }
     };
-
+  
     loadEvents();
-    
+  
   }, []);
 
   const handleDeleteEvent = async (eventId) => {
@@ -175,14 +185,26 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
           </Button>
         </View>
       </Modal>
-            {/*<Text style={style.text}>Eventos convidados</Text>
-            <View style={style.eventBox}>
-              <EventBox
-                colors={[]}
-                onPress={() => navigation.navigate('Event Details')}
-                iconSource={require('../../assets/icons/more.png')}
-              />
-            </View>*/}
+            <Text style={style.text}>Eventos convidados</Text>
+              {guestEvents.length > 0 ? (
+                guestEvents.map((guestEvent) => (
+                  <View key={guestEvent.id} style={style.eventBox}>
+                    <GradientText style={style.text}>Nome: {guestEvent.nome}</GradientText>
+                    <Text style={style.text}>Data: {guestEvent.data}</Text>
+                    <Text style={style.text}>Hora: {guestEvent.horario}</Text>
+                    <Text style={style.text}>Endereço: {guestEvent.endereco}</Text>
+                    <View style={style.buttonContainer}>
+                    </View>
+                    <View style={style.buttonContainer}>
+                      <GradientButtonM onPress={() => navigation.navigate('EventInfo', { eventName: guestEvent.nome })} colors={[]} >
+                          <Text style={styles.gradientButtonLText}>Informações</Text>
+                      </GradientButtonM>
+                    </View>
+                  </View>
+                ))
+              ) : (
+                <Text style={style.noEventsText}>Nenhum evento em que o usuário é convidado foi encontrado.</Text>
+              )}
             </View>
         </View>
       </SafeAreaView>

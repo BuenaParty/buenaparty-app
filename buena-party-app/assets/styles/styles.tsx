@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     },
     textCode: {
         fontFamily: 'Strong',
-        fontSize: 10,
+        fontSize: 20,
         fontWeight: 'bold',
         color: '#FFFFFF',
         textAlign: 'center',
