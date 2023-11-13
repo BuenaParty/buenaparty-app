@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         //height: 70,
         //width: 220,
         width: width / 2,
-        height: height / 9,
+        height: height / 12,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         flex: 0,
         color: '#A12577',
         width: width / 2.1,
-        padding:height*0.02,
+        padding:height*0.024,
         borderRadius: 13,
         backgroundColor: '#000000',
         fontFamily: 'Strong',
@@ -313,6 +313,7 @@ const styles = StyleSheet.create({
         height: 55,
         width: 35,
         borderRadius: 15,
+        justifyContent: 'center',
     },
     imageCode: {
         height: 20,
@@ -322,9 +323,11 @@ const styles = StyleSheet.create({
     },
     textCode: {
         fontFamily: 'Strong',
-        fontSize: 16,
+        fontSize: 28,
         fontWeight: 'bold',
-        color: '#FFFFFF'
+        color: '#FFFFFF',
+        textAlign: 'center',
+        textTransform: 'uppercase',
     },
 
     //GUESTS BOX

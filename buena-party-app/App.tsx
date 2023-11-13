@@ -56,12 +56,12 @@ const App = () => {
           )}*/}
           <Stack.Screen
             name="FirstScreen"
-            component={EventInfo}
+            component={FirstScreen}
             options={{
               headerShown: false,
             }}
           />
-          {/*<Stack.Screen
+          <Stack.Screen
               name="HomeScreen"
               component={HomeScreen}
               options={{
@@ -125,8 +125,21 @@ const App = () => {
             options={{
               headerShown: false,
             }}
-          />*/ }
-          
+          />
+          <Stack.Screen
+            name="EnterEvent"
+            component={EnterEvent}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="EventInfo"
+            component={EventInfo}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider >

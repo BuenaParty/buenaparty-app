@@ -11,6 +11,8 @@
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
     "@react-native-async-storage/async-storage": "1.18.2",
+    "@react-native-clipboard/clipboard": "^1.12.1",
+    "@react-native-community/clipboard": "^1.5.1",
     "@react-native-masked-view/masked-view": "^0.2.9",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.16",
@@ -51,6 +53,7 @@
     "react-native-text-gradient": "^0.1.7",
     "react-native-web": "~0.19.6",
     "react-text-mask": "^5.5.0",
+    "shortid": "^2.2.16",
     "sqlite3": "^5.1.6",
     "uuid": "^9.0.1"
   },

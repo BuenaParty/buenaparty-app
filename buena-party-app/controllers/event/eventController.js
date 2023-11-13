@@ -1,4 +1,4 @@
-const { getEvents, insertEvent, updateEvent, deleteEvent, resetAutoIncrement, getEventById, getEventByUserId, addGuestToEvent, getGuestsByEventId, removeGuestFromEvent } = require('../../models/eventModel');
+const { getEvents, insertEvent, updateEvent, deleteEvent, resetAutoIncrement, getEventById, getEventByUserId, addGuestToEvent, getGuestsByEventId, removeGuestFromEvent, getInviteCodeByEventId } = require('../../models/eventModel');
 
 const listEvents = (req, res) => {
     getEvents((error, result) => {
@@ -9,6 +9,23 @@ const listEvents = (req, res) => {
         }
     });
 }
+
+const showInviteCode = (req, res) => {
+    const eventId = req.params.id; // Obtém o ID do evento a partir dos parâmetros da rota
+
+    getInviteCodeByEventId(eventId, (error, inviteCode) => {
+        if (error) {
+            console.error('Erro ao recuperar o código de convite:', error);
+            res.status(500).json({ error: 'Erro interno do servidor' });
+        } else {
+            if (inviteCode !== null) {
+                res.json({ code: inviteCode });
+            } else {
+                res.status(404).json({ error: 'Evento não encontrado ou código de convite não disponível' });
+            }
+        }
+    });
+};
 
 const showEvent = (req, res) => {
     const eventId = req.params.id; // Obtém o ID do evento da URL
@@ -131,4 +148,4 @@ const removeEvent = (req, res) => {
     })
 }
 
-module.exports = { listEvents, registerEvent, changeEvent, removeEvent, showEvent, listById, enterEvent, listGuests, removeGuest };
+module.exports = { listEvents, registerEvent, changeEvent, removeEvent, showEvent, listById, enterEvent, listGuests, removeGuest, showInviteCode };

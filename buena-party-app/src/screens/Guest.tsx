@@ -61,7 +61,7 @@ const Guests: React.FC<GuestsProps> = ({ navigation }) => {
                 </View>
                 <Text style={style.text}>Convidados</Text>
                 <GradientButtonL colors={[]} onPress={() => navigation.navigate('InviteCode')} style={style.buttons}>
-                    <Text style={styles.gradientButtonLText}>Gerar código de convite</Text>
+                    <Text style={styles.gradientButtonLText}>Mostrar código de convite</Text>
                 </GradientButtonL>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
 

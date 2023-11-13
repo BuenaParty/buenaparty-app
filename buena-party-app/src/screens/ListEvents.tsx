@@ -60,16 +60,14 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
       try {
         // Retrieve the user's ID from AsyncStorage
         const loggedInUserId = await AsyncStorage.getItem('idUser');
-        console.log(loggedInUserId)
     
         if (loggedInUserId) {
           const response = await axios.get(`${urlAPI}/events/byuser/${loggedInUserId}`);
     
           if (response.status === 200) {
-            console.log('Response status:', response.status);
+            
             console.log(response.data)
             setEvents(response.data.events);
-            setRenderKey((prevKey) => prevKey + 1)
 
           } else {
             console.log('Nenhum evento encontrado.');
@@ -84,7 +82,7 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
 
     loadEvents();
     
-  }, [events]);
+  }, []);
 
   const handleDeleteEvent = async (eventId) => {
     try {
@@ -95,6 +93,19 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
       setEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
     } catch (error) {
       console.error('Erro ao excluir o evento:', error);
+    }
+  };
+
+  const navigateToGuests = async (eventId) => {
+    try {
+      // Armazenar o ID do evento no AsyncStorage
+      await AsyncStorage.setItem('selectedEventId', eventId.toString());
+      console.log(eventId)
+      
+      // Navegar para a tela de Convidados
+      navigation.navigate('Guests');
+    } catch (error) {
+      console.error('Erro ao armazenar o ID do evento:', error);
     }
   };
   
@@ -142,7 +153,7 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
                     </GradientButtonS>
                   </View>
                   <View style={style.buttonContainer}>
-                    <GradientButtonM onPress={() => navigation.navigate('Guests')} colors={[]} >
+                    <GradientButtonM onPress={() => navigateToGuests(event.id)} colors={[]} >
                         <Text style={styles.gradientButtonLText}>Convidados</Text>
                     </GradientButtonM>
               </View>

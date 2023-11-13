@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { createUserTable } = require('./models/userModel');
 const { registerUser, listUsers, updateUser, deleteUser } = require('./controllers/user/userController');
-const { listEvents, registerEvent, changeEvent, removeEvent, showEvent, listById, enterEvent, listGuests, removeGuest } = require('./controllers/event/eventController')
+const { listEvents, registerEvent, changeEvent, removeEvent, showEvent, listById, enterEvent, listGuests, removeGuest, showInviteCode } = require('./controllers/event/eventController')
 const cors = require('cors');
 const { login } = require('./controllers/user/authController');
 
@@ -33,9 +33,10 @@ server.delete('/user/delete/:id', deleteUser);
 server.get('/event/:id', showEvent)
 server.get('/events/list', listEvents);
 server.post('/event/register', registerEvent);
-server.put('/event/update/:id', changeEvent);
+server.put('/event/update/:id', changeEvent);0
 server.delete('/event/delete/:id', removeEvent);
 server.get('/events/byuser/:userId', listById);
+server.get('/event/:id/code', showInviteCode)
 
 // Novas operações com eventos e convidados
 server.get('/event/guests/:id', listGuests);

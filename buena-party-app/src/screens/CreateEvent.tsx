@@ -39,16 +39,19 @@ const CreateEvent: React.FC<CreateEventProps> = ({ navigation }) => {
       const idUser = await AsyncStorage.getItem('idUser');
       const nomeUser = await AsyncStorage.getItem('nomeUser');
 
-      const uuid = require('uuid');
+      const generateShortCode = () => {
+        const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        let shortCode = '';
+    
+        for (let i = 0; i < 6; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            shortCode += characters.charAt(randomIndex);
+        }
+    
+        return shortCode;
+    };
 
-      function generateShortUuid() {
-        const fullUuid = uuid.v4();
-        const shortUuid = fullUuid.replace(/-/g, '').substring(0, 6);
-
-        return shortUuid;
-      }
-
-      const codigoConvite = generateShortUuid();
+      const codigoConvite = generateShortCode();
       console.log('Unique Code:', codigoConvite);
 
       const response = await axios.post(`${urlAPI}/event/register`, {

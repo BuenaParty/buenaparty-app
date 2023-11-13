@@ -43,6 +43,17 @@ const getEventById = (eventId, callback) => {
     });
 };
 
+const getInviteCodeByEventId = (eventId, callback) => {
+    db.get('SELECT codigo_convite FROM evento WHERE id = ?', eventId, (error, row) => {
+        if (error) {
+            callback(error, null);
+        } else {
+            const inviteCode = row ? row.codigo_convite : null;
+            callback(null, inviteCode);
+        }
+    });
+};
+
 const getEventByUserId = (userId, callback) => {
     db.all('SELECT * FROM evento WHERE criado_por = ?', userId, (error, row) => {
         if (error) {
@@ -53,11 +64,21 @@ const getEventByUserId = (userId, callback) => {
     });
 };
 
-const uuid = require('uuid');
+const generateShortCode = () => {
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let shortCode = '';
+
+    for (let i = 0; i < 6; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        shortCode += characters.charAt(randomIndex);
+    }
+
+    return shortCode;
+};
 
 const insertEvent = (event, callback) => {
     const { nome, endereco, data, horario, criado_por } = event;
-    const codigoConvite = uuid.v4(); // Gera um ID único
+    const codigoConvite = generateShortCode(); // Gera um ID único
 
     db.run('INSERT INTO evento (nome, endereco, data, horario, criado_por, codigo_convite ) VALUES (?, ?, ?, ?, ?, ?)', [nome, endereco, data, horario, criado_por, codigoConvite], (error) => {
         if (error) {
@@ -145,4 +166,4 @@ const resetAutoIncrement = _ => {
     db.run('DELETE FROM sqlite_sequence WHERE name = "evento"');
 };
 
-module.exports = { createEventTable, getEvents, insertEvent, updateEvent, deleteEvent, resetAutoIncrement, getEventById, getEventByUserId, addGuestToEvent, getGuestsByEventId, removeGuestFromEvent }; 
+module.exports = { createEventTable, getEvents, insertEvent, updateEvent, deleteEvent, resetAutoIncrement, getEventById, getEventByUserId, addGuestToEvent, getGuestsByEventId, removeGuestFromEvent, getInviteCodeByEventId }; 
