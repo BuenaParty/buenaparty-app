@@ -70,8 +70,10 @@ type EnterEventProps = {
           
           if (enterEventResponse.status === 200) {
             console.log('Entrou no evento com sucesso!', enterEventResponse.data);
+
+            const eventName = enterEventResponse.data.event.nome;
             // Lógica adicional ou navegação pode ser adicionada aqui
-            navigation.navigate('EventInfo');
+            navigation.navigate('EventInfo', { eventName });
           } else {
             console.log('Erro ao entrar no evento:', enterEventResponse.data);
             // Manipule o erro conforme necessário

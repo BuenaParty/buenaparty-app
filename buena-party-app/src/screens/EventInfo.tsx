@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Background from '../components/Background';
 import { Text, View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -8,6 +8,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import EventBoxDark from '../components/EventBoxDark';
 import GradientButtonL from '../components/GradientButtonL';
 import Images from '../components/Images';
+import { useRoute } from '@react-navigation/native';
 
 type EventInfoProps = {
     navigation: StackNavigationProp<any>;
@@ -23,10 +24,11 @@ const baseTextSize = 25;
 const textSize = (screen.width * 0.3 * baseTextSize) / 100;
 
 const EventInfo: React.FC<EventInfoProps> = ({ navigation, route }) => {
-    const { eventName } = route.params;
+    const { params } = useRoute();
+    const eventName = params && 'eventName' in params ? params.eventName : 'Carregando...'
     
     return (
-        <Background colors={[]} style={style.container}>
+        <Background colors={[]}>
             <SafeAreaView style={style.main}>
                 <View style={style.boxImage}>
                     <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
@@ -43,7 +45,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ navigation, route }) => {
                     </View>
                 </View>
                 <Text style={style.text}>
-                    {eventName}
+                    {typeof eventName === 'string' ? eventName : 'Carregando...'}
                 </Text>
                 <View style={style.box}>
                     {/*<EventBoxDark
@@ -59,7 +61,6 @@ const EventInfo: React.FC<EventInfoProps> = ({ navigation, route }) => {
                         <GradientButtonL
                             colors={[]}
                             onPress={() => navigation.navigate('Home Screen 2')}
-                            style={style.button}
                         >
                             <Text style={styles.gradientButtonLText}>
                                 Acessar o feed
