@@ -13,34 +13,38 @@ import axios from "axios";
 
 type GuestsProps = {
     navigation: StackNavigationProp<any>;
+    route: any;
 };
 const { width, height } = Dimensions.get('screen')
 
-const Guests: React.FC<GuestsProps> = ({ navigation }) => {
+const Guests: React.FC<GuestsProps> = ({ navigation, route }) => {
+    const [guests, setGuests] = useState([]);
+    const eventId = route.params?.eventId;
+    console.log('ID:', eventId);
 
     const handleGoBack = () => {
         navigation.goBack();
-      }
+    }
 
-    /*const [guestData, setGuestData] = useState<
-    { key: string; name: string; email: string; telephone: string }[]
-  >([]);
-
-    const guestData = [
-        {
-            key: "guest1",
-            name: "Julia Caroline",
-            email: "julia@example.com",
-            phone: "123-456-7890",
-        },
-        {
-            key: "guest2",
-            name: "John Doe",
-            email: "john@example.com",
-            phone: "987-654-3210",
-        },
-
-    ];*/
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/event/guests/${eventId}`);
+                console.log('Dados do response:', response.data);
+    
+                // Verifique se guests existe e não está vazio antes de atualizar o estado
+                if (response.data.guests && response.data.guests.length > 0) {
+                    setGuests(response.data.guests);
+                }
+            } catch (error) {
+                console.error(`Erro ao obter lista de convidados: ${error}`);
+            }
+        };
+    
+        fetchData();
+    }, [eventId]);
+    
+    
 
     return (
         <Background colors={[]} >
@@ -64,21 +68,10 @@ const Guests: React.FC<GuestsProps> = ({ navigation }) => {
                     <Text style={styles.gradientButtonLText}>Mostrar código de convite</Text>
                 </GradientButtonL>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-
-                    {/*{guestData.map((guest) => (
-                        <GuestsBox
-                            key={guest.key}
-                            data={[guest]}
-                        />
+                    {guests.map((guest) => (
+                        <GuestsBox key={guest.id} data={guest} />
                     ))}
-                    */}
-
-
-
-
-
                 </ScrollView>
-
             </SafeAreaView>
         </Background>
     )

@@ -110,10 +110,10 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
     try {
       // Armazenar o ID do evento no AsyncStorage
       await AsyncStorage.setItem('selectedEventId', eventId.toString());
-      console.log(eventId)
+      console.log('Nagegando para guest com a ID:', eventId)
       
       // Navegar para a tela de Convidados
-      navigation.navigate('Guests');
+      navigation.navigate('Guests', { eventId });
     } catch (error) {
       console.error('Erro ao armazenar o ID do evento:', error);
     }

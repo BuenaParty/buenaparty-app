@@ -2,11 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Background from '../components/Background';
 import { Text, View, StyleSheet, TouchableOpacity, Dimensions, Image, FlatList, TextInput } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import NavBar from '../components/NavBar';
 import styles from '../../assets/styles/styles';
 import { StackNavigationProp } from '@react-navigation/stack';
-import EventBoxDark from '../components/EventBoxDark';
-import GradientButtonL from '../components/GradientButtonL';
 import Images from '../components/Images';
 import { useRoute } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
