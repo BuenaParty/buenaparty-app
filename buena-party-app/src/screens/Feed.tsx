@@ -26,6 +26,8 @@ const baseTextSize = 25;
 const textSize = (screen.width * 0.3 * baseTextSize) / 100;
 
 const Feed: React.FC<FeedProps> = ({ navigation, route }) => {
+
+
     const { params } = useRoute();
     const eventName = params && 'eventName' in params ? params.eventName : 'Carregando...'
 
@@ -33,6 +35,10 @@ const Feed: React.FC<FeedProps> = ({ navigation, route }) => {
     const [caption, setCaption] = useState('');
     const [selectedMedia, setSelectedMedia] = useState(null);
 
+    const handleGoBack = () => {
+        navigation.goBack();
+      }
+    
     // Função para escolher imagem do aparelho
     const pickImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -89,7 +95,7 @@ const Feed: React.FC<FeedProps> = ({ navigation, route }) => {
             <SafeAreaView style={style.main}>
                 <View style={style.headerContainer}>
                     <View style={style.boxImage}>
-                        <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+                        <TouchableOpacity onPress={handleGoBack}>
                             <Images style={style.back} iconSource={require('../../assets/icons/back.png')} />
                         </TouchableOpacity>
                         <View style={style.LogoContainer}>
