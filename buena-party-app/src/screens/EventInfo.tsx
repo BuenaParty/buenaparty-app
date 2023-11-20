@@ -9,6 +9,7 @@ import EventBoxDark from '../components/EventBoxDark';
 import GradientButtonL from '../components/GradientButtonL';
 import Images from '../components/Images';
 import { useRoute } from '@react-navigation/native';
+import QRCode from 'react-native-qrcode-svg'; // biblioteca do qrcode
 
 type EventInfoProps = {
     navigation: StackNavigationProp<any>;
@@ -17,15 +18,37 @@ type EventInfoProps = {
             eventName: string;
         };
     };
+    userId: string;
 };
 
 const { width, height } = Dimensions.get('screen')
 const baseTextSize = 25;
 const textSize = (screen.width * 0.3 * baseTextSize) / 100;
 
-const EventInfo: React.FC<EventInfoProps> = ({ navigation, route }) => {
+const EventInfo: React.FC<EventInfoProps> = ({ navigation, route, userId }) => {
     const { params } = useRoute();
     const eventName = params && 'eventName' in params ? params.eventName : 'Carregando...'
+
+    // Função para gerar o conteúdo do QR code com base no ID do usuário
+    const generateQRContent = (userId: string) => {
+        return `User ID: ${userId}`;
+    };
+
+    // Estado para armazenar o conteúdo do QR code
+    const [qrContent, setQrContent] = useState(generateQRContent(userId));
+
+    // Função para atualizar o conteúdo do QR code quando necessário
+    const updateQRContent = () => {
+    // Chame esta função para atualizar o conteúdo do QR code, se necessário
+        setQrContent(generateQRContent(userId));
+    };
+      
+    const [qrValue, setQrValue] = useState("");
+
+    const generateQRCode = () => {
+        // Defina o conteúdo do QR code como desejado, por exemplo, a rota 'Event Info'
+        setQrValue('Event Info');
+      };
     
     return (
         <Background colors={[]}>
@@ -54,7 +77,23 @@ const EventInfo: React.FC<EventInfoProps> = ({ navigation, route }) => {
                         onPress={() => navigation.navigate('Event Details')}
     />*/}
                     <View style={style.qrCodeBox}>
-
+                        <View style={style.containerQr}>
+                            <QRCode
+                            value={qrValue ? qrValue : 'NA'}
+                            size={250}
+                            color="black"
+                            backgroundColor="white"
+                            //logoSize={25}
+                            //logoMargin={2}
+                            //logoBorderRadius={15}
+                            //logoBackgroundColor="white"
+                            />
+                        </View>
+                        <View style={style.containerqr}>
+                            <View style={{margin:5}}>
+                                
+                            </View>
+                        </View>
                     </View>
                     <View style={{ flex: 1, justifyContent: 'center'}}>
                         {/* Adicionando GradientButtonL abaixo */}
@@ -129,5 +168,15 @@ const style = StyleSheet.create({
         color:'white',
         textAlign:'center'
     },
+    containerQr: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 30,
+    },
+    containerqr: {
+        flex: 1,
+        justifyContent: 'center',
+    }
 });
 export default EventInfo;
