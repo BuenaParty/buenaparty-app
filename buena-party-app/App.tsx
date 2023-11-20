@@ -15,8 +15,8 @@ import React, { useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import EnterEvent from './src/screens/EnterEvent';
 import EventInfo from './src/screens/EventInfo';
-import InviteCodeEnter from './src/components/InviteCodeEnter';
-import InviteCode from './src/components/InviteCode';
+import Feed from './src/screens/Feed';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -138,6 +138,13 @@ const App = () => {
           <Stack.Screen
             name="EventInfo"
             component={EventInfo}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Feed"
+            component={Feed}
             options={{
               headerShown: false,
             }}
