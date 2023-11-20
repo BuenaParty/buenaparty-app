@@ -83,7 +83,7 @@ const Feed: React.FC<FeedProps> = ({ navigation, route }) => {
             setCaption('');
         }
     };
-    
+
     return (
         <Background colors={[]}>
             <SafeAreaView style={style.main}>
@@ -156,7 +156,7 @@ const style = StyleSheet.create({
     headerContainer: {
         alignItems: 'center',
         justifyContent: 'space-evenly',
-      },
+    },
     LogoContainer: {
         flex: 1,
         alignItems: 'center',
@@ -196,9 +196,9 @@ const style = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    bottomText:{
-        color:'white',
-        textAlign:'center'
+    bottomText: {
+        color: 'white',
+        textAlign: 'center'
     },
     postContainer: {
         marginBottom: 10,
@@ -223,15 +223,15 @@ const style = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-      },
-      bottomBarButton: {
+    },
+    bottomBarButton: {
         padding: 10,
-      },
-      bottomBarIcon: {
+    },
+    bottomBarIcon: {
         width: 30,
         height: 30,
-      },
-      captionInput: {
+    },
+    captionInput: {
         flex: 1,
         height: 40,
         marginLeft: 10,
@@ -240,14 +240,14 @@ const style = StyleSheet.create({
         padding: 8,
         borderColor: 'white',
         color: 'white',
-      },
-      bottomBarText: {
+    },
+    bottomBarText: {
         fontSize: 16,
         fontWeight: 'bold',
         color: 'white'
-      },
-      feedName: {
+    },
+    feedName: {
         marginTop: 20,
-      }
+    }
 });
 export default Feed;

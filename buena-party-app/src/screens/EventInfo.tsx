@@ -99,7 +99,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ navigation, route, userId }) => {
                         {/* Adicionando GradientButtonL abaixo */}
                         <GradientButtonL
                             colors={[]}
-                            onPress={() => navigation.navigate('Home Screen 2')}
+                            onPress={() => navigation.navigate('Feed')}
                         >
                             <Text style={styles.gradientButtonLText}>
                                 Acessar o feed
