@@ -2,147 +2,141 @@ import React, { useState, useEffect } from 'react'
 import Background from '../components/Background';
 import { Text, View, StyleSheet, TouchableOpacity, Dimensions, Image, FlatList, TextInput } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import NavBar from '../components/NavBar';
 import styles from '../../assets/styles/styles';
 import { StackNavigationProp } from '@react-navigation/stack';
-import EventBoxDark from '../components/EventBoxDark';
-import GradientButtonL from '../components/GradientButtonL';
 import Images from '../components/Images';
 import { useRoute } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { ScrollView } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type FeedProps = {
     navigation: StackNavigationProp<any>;
     route: {
-        params: {
-            eventName: string;
-        };
+      params: {
+        eventName: string;
+      };
     };
-};
-
-const { width, height } = Dimensions.get('screen')
-const baseTextSize = 25;
-const textSize = (screen.width * 0.3 * baseTextSize) / 100;
-
-const Feed: React.FC<FeedProps> = ({ navigation, route }) => {
+  };
+  
+  const { width, height } = Dimensions.get('screen');
+  const baseTextSize = 25;
+  const textSize = (width * 0.3 * baseTextSize) / 100;
+  
+  const Feed: React.FC<FeedProps> = ({ navigation, route }) => {
     const { params } = useRoute();
-    const eventName = params && 'eventName' in params ? params.eventName : 'Carregando...'
-
+    const eventName = params && 'eventName' in params ? params.eventName : 'Carregando...';
+  
     const [posts, setPosts] = useState([]); // Array para guardar os posts
     const [caption, setCaption] = useState('');
     const [selectedMedia, setSelectedMedia] = useState(null);
-
-    // Função para escolher imagem do aparelho
+  
+    const handleGoBack = () => {
+      navigation.goBack();
+    };
+  
     const pickImage = async () => {
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
-
-        if (!result.canceled) {
-            const uri = 'uri' in result ? result.uri : result.assets[0].uri;
-            // Adicionar imagem estado temporário
-            setSelectedMedia({ type: 'image', uri });
-            setCaption('');
-        }
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+  
+      if (!result.canceled) {
+        const uri = 'uri' in result ? result.uri : result.assets[0].uri;
+        // Adicionar imagem ao estado temporário
+        setSelectedMedia({ type: 'image', uri });
+        setCaption('');
+      }
     };
-
-    // Função para escolher video do aparelho
+  
     const pickVideo = async () => {
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-        });
-
-        if (!result.canceled) {
-            const uri = 'uri' in result ? result.uri : result.assets[0].uri;
-            //Adicionar video ao array
-            setSelectedMedia({ type: 'video', uri });
-            setCaption('');
-        }
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+      });
+  
+      if (!result.canceled) {
+        const uri = 'uri' in result ? result.uri : result.assets[0].uri;
+        // Adicionar vídeo ao estado temporário
+        setSelectedMedia({ type: 'video', uri });
+        setCaption('');
+      }
     };
-
-    //Função para renderizar os ítens na Lista
+  
     const renderPost = ({ item }) => (
         <View style={style.postContainer}>
-            {item.type === 'image' ? (
-                <Image source={{ uri: item.uri }} style={style.postImage} />
-            ) : (
-                <Text>Video: {item.uri}</Text>
-            )}
-            <Text>{item.caption}</Text>
+          {item.type === 'image' ? (
+            <Image source={{ uri: item.uri }} style={style.postImage} />
+          ) : (
+            <Text style={style.text}>Video: {item.uri}</Text>
+          )}
+          <Text style={style.text}>{item.caption}</Text>
+          <Text style={style.text}>Posted by: {item.userName}</Text>
         </View>
-    );
-
+      );
+      
+  
     const handleSend = () => {
-        if (selectedMedia) {
-            setPosts([...posts, { ...selectedMedia, caption }]);
-            setSelectedMedia(null);
-            setCaption('');
-        }
+      if (selectedMedia) {
+        // Adicionar nova postagem ao estado
+        setPosts([...posts, { ...selectedMedia, caption, userName: 'julia' }]);
+        setSelectedMedia(null);
+        setCaption('');
+      }
     };
-
+  
     return (
-        <Background colors={[]}>
-            <SafeAreaView style={style.main}>
-                <View style={style.headerContainer}>
-                    <View style={style.boxImage}>
-                        <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
-                            <Images style={style.back} iconSource={require('../../assets/icons/back.png')} />
-                        </TouchableOpacity>
-                        <View style={style.LogoContainer}>
-                            <Images style={style.LogoBranca} iconSource={require('../../assets/icons/LogoBranco.png')} />
-                        </View>
-                    </View>
-                    <View style={style.feedName}>
-                        <Text style={style.text}>{typeof eventName === 'string' ? eventName : 'Carregando...'}</Text>
-                    </View>
-                </View>
-                <ScrollView>
-                    <FlatList
-                        data={posts}
-                        renderItem={renderPost}
-                        keyExtractor={(item, index) => index.toString()}
-                    />
-                    {selectedMedia && (
-                        <View style={style.postContainer}>
-                            {selectedMedia.type === 'image' ? (
-                                <Image source={{ uri: selectedMedia.uri }} style={style.postImage} />
-                            ) : (
-                                <Text>Video: {selectedMedia.uri}</Text>
-                            )}
-                            <Text>{caption}</Text>
-                        </View>
-                    )}
+      <Background colors={[]}>
+        <SafeAreaView style={style.main}>
+          <View style={style.headerContainer}>
+            <View style={style.boxImage}>
+              <TouchableOpacity onPress={handleGoBack}>
+                <Images style={style.back} iconSource={require('../../assets/icons/back.png')} />
+              </TouchableOpacity>
+              <View style={style.LogoContainer}>
+                <Images style={style.LogoBranca} iconSource={require('../../assets/icons/LogoBranco.png')} />
+              </View>
+            </View>
+            <View style={style.feedName}>
+              <Text style={style.text}>{typeof eventName === 'string' ? eventName : 'Carregando...'}</Text>
+            </View>
+          </View>
+          <ScrollView style={{ marginBottom: 80 }}>
+            <FlatList data={posts} renderItem={renderPost} keyExtractor={(item, index) => index.toString()} />
+            {selectedMedia && (
+              <View style={style.postContainer}>
+                {selectedMedia.type === 'image' ? (
+                  <Image source={{ uri: selectedMedia.uri }} style={style.postImage} />
+                ) : (
+                  <Text>Video: {selectedMedia.uri}</Text>
+                )}
+                <Text>{caption}</Text>
+              </View>
+            )}
+          </ScrollView>
+          <View style={style.bottomBar}>
+            <TouchableOpacity onPress={pickImage} style={style.bottomBarButton}>
+              <Images style={style.bottomBarIcon} iconSource={require('../../assets/icons/image.png')} />
+            </TouchableOpacity>
+            <TextInput
+              style={style.captionInput}
+              placeholder='Escolha uma legenda...'
+              value={caption}
+              onChangeText={(text) => setCaption(text)}
+            />
+            <TouchableOpacity onPress={pickVideo} style={style.bottomBarButton}>
+              <Images style={style.bottomBarIcon} iconSource={require('../../assets/icons/video.png')} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleSend} style={style.bottomBarButton}>
+              <Text style={style.bottomBarText}>Send</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      </Background>
+    );
+  };
 
-                </ScrollView>
-                <View style={style.bottomBar}>
-                    <TouchableOpacity onPress={pickImage} style={style.bottomBarButton}>
-                        <Images style={style.bottomBarIcon} iconSource={require('../../assets/icons/image.png')} />
-                    </TouchableOpacity>
-                    <TextInput
-                        style={style.captionInput}
-                        placeholder='Escolha uma legenda...'
-                        value={caption}
-                        onChangeText={(text) => setCaption(text)}
-                    />
-                    <TouchableOpacity onPress={pickVideo} style={style.bottomBarButton}>
-                        <Images style={style.bottomBarIcon} iconSource={require('../../assets/icons/video.png')} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={handleSend}
-                        style={style.bottomBarButton}
-                    >
-                        <Text style={style.bottomBarText}>Send</Text>
-                    </TouchableOpacity>
-                </View>
-
-            </SafeAreaView>
-        </Background>
-    )
-}
 const style = StyleSheet.create({
     boxImage: {
         flexDirection: 'row',

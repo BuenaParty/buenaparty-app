@@ -9,7 +9,7 @@ import {
 import styles from '../../assets/styles/styles';
 
 interface GuestsBoxProps {
-    data: { key: string; name: string; email: string; phone: string }[];
+    data: { id: string; nome: string; e_mail: string; telefone: string };
 };
 
 const GuestsBox: React.FC<GuestsBoxProps> = ({ data }) => {
@@ -20,8 +20,6 @@ const GuestsBox: React.FC<GuestsBoxProps> = ({ data }) => {
         setIsExpanded(!isExpanded);
     };
 
-    const guest = data[0];
-
     return (
         <View style={styles.container}>
           <LinearGradient
@@ -31,7 +29,7 @@ const GuestsBox: React.FC<GuestsBoxProps> = ({ data }) => {
             <TouchableOpacity onPress={toggleExpand}>
               <View style={styles.header}>
                 <Text style={styles.headerText}>
-                  {guest.name}
+                  {data.nome}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -46,10 +44,10 @@ const GuestsBox: React.FC<GuestsBoxProps> = ({ data }) => {
                 >
                   <View style={styles.headerExpanded}>
                     <Text style={styles.headerTextExpanded}>
-                      {guest.email}
+                      {data.e_mail}
                     </Text>
                     <Text style={styles.headerTextExpanded}>
-                      {guest.phone}
+                      {data.telefone}
                     </Text>
                   </View>
                 </LinearGradient>

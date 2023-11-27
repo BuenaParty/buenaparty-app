@@ -342,13 +342,16 @@ const styles = StyleSheet.create({
     //GUESTS BOX
 
     container: {
+        width: width / 1.23,
+        height: height / 10,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 5,
     },
     background: {
         borderRadius: 15,
-        width: width / 1.9,
+        width: width / 1.25,
     },
     header: {
         margin: 2,
@@ -361,11 +364,12 @@ const styles = StyleSheet.create({
         padding: width / 30,
         backgroundColor: '#D3D3D3',
         borderRadius: 15,
-        width: width / 1.9,
+        width: width / 1.25,
     },
     headerText: {
         fontSize: textSize20,
         width: '100%',
+        color: 'black'
     },
     content: {
         backgroundColor: '#FFFFFF',
@@ -375,7 +379,7 @@ const styles = StyleSheet.create({
     headerTextExpanded: {
         fontSize: textSize20,
         width: '100%',
-        color: '#FFFFFF',
+        color: 'black',
     },
 });
 

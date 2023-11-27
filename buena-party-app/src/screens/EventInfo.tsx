@@ -29,6 +29,10 @@ const EventInfo: React.FC<EventInfoProps> = ({ navigation, route, userId }) => {
     const { params } = useRoute();
     const eventName = params && 'eventName' in params ? params.eventName : 'Carregando...'
 
+    const handleGoBack = () => {
+        navigation.goBack();
+      }
+
     // Função para gerar o conteúdo do QR code com base no ID do usuário
     const generateQRContent = (userId: string) => {
         return `User ID: ${userId}`;
@@ -54,7 +58,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ navigation, route, userId }) => {
         <Background colors={[]}>
             <SafeAreaView style={style.main}>
                 <View style={style.boxImage}>
-                    <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+                    <TouchableOpacity onPress={handleGoBack}>
                         <Images
                             style={style.back}
                             iconSource={require('../../assets/icons/back.png')}
@@ -99,7 +103,7 @@ const EventInfo: React.FC<EventInfoProps> = ({ navigation, route, userId }) => {
                         {/* Adicionando GradientButtonL abaixo */}
                         <GradientButtonL
                             colors={[]}
-                            onPress={() => navigation.navigate('Feed')}
+                            onPress={() => navigation.navigate('Feed', { eventName })}
                         >
                             <Text style={styles.gradientButtonLText}>
                                 Acessar o feed
