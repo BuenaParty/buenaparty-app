@@ -2,14 +2,14 @@ const db = require('../db');
 
 const createUserTable = () => {
     db.serialize(() => {
-        db.run('CREATE TABLE IF NOT EXISTS usuario (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT NOT NULL, e_mail TEXT NOT NULL UNIQUE, senha TEXT, telefone TEXT)', (error) => {
-            if (error) {
-                console.error(`Erro na criação da tabela 'usuario': ${error.message}`);
-            } else {
-                console.log(`Tabela 'usuario' criada com sucesso!`);
-            }
+            db.run('CREATE TABLE IF NOT EXISTS usuario (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT NOT NULL, e_mail TEXT NOT NULL UNIQUE, senha TEXT, telefone TEXT, reset_token TEXT)', (createError) => {
+                if (createError) {
+                    console.error(`Erro na criação da tabela 'usuario': ${createError.message}`);
+                } else {
+                    console.log('Tabela "usuario" criada com sucesso!');
+                }
+            });
         });
-    });
 };
 
 const insertUser = (user, callback) => {
@@ -43,6 +43,28 @@ const getUserById = (userId, callback) => {
         }
     });
 };
+
+const getUserByEmail = (userE_mail, callback) => {
+    db.get('SELECT * FROM usuario WHERE e_mail = ?', userE_mail, (error, row) => {
+        if (error) {
+            callback(error, null);
+        } else {
+            callback(null, row);
+        }
+    });
+};
+
+const changePassword = (userId, newPassword, callback) => {
+    console.log(`Updating password for user ${userId} to ${newPassword}`);
+    db.run('UPDATE usuario SET senha = ? WHERE id = ?', [newPassword, userId], (error) => {
+        if (error) {
+            callback(error);
+        } else {
+            callback(null);
+        }
+    });
+};
+
 
 const changeUser = (userId, updatedUser, callback) => {
     const { nome, e_mail, senha, telefone } = updatedUser;
@@ -91,4 +113,4 @@ const resetAutoIncrement = _ => {
     db.run('DELETE FROM sqlite_sequence WHERE name = "usuario"');
 }
 
-module.exports = { createUserTable, insertUser, getUsers, changeUser, removeUser, resetAutoIncrement, getUserById };
+module.exports = { createUserTable, insertUser, getUsers, changeUser, removeUser, resetAutoIncrement, getUserById, changePassword, getUserByEmail };

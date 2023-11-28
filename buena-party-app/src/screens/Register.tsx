@@ -89,7 +89,7 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
     };
 
     return (
-        <Background colors={[]} style={style.background}>
+        <Background colors={[]}>
             <SafeAreaView style={style.container}>
                 <View style={style.boxImage}>
                     <TouchableOpacity onPress={() => navigation.navigate('FirstScreen')}>
@@ -181,9 +181,6 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
 };
 
 const style = StyleSheet.create({
-    background: {
-        // Defina os estilos para o plano de fundo, se necessário.
-    },
     container: {
         justifyContent: 'center',
         alignItems: 'center',

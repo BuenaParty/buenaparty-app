@@ -1,4 +1,5 @@
-const { insertUser, getUsers, changeUser, removeUser, resetAutoIncrement, getUserById } = require('../../models/userModel');
+const { insertUser, getUsers, changeUser, removeUser, resetAutoIncrement, getUserById, changePassword, getUserByEmail } = require('../../models/userModel');
+const User = require('../../models/userModel');
 
 const registerUser = (req, res) => {
     const user = req.body;
@@ -50,6 +51,37 @@ const updateUser = (req, res) => {
     })
 };
 
+const resetPassword = async (req, res) => {
+    const { e_mail, newPassword } = req.body;
+
+    try {
+        const user = await getUserByEmail(e_mail, (error, user) => {
+            if (error) {
+                console.error('Erro ao buscar usuário por e-mail:', error);
+                return res.status(500).json({ error: 'Erro na redefinição de senha.' });
+            }
+
+            if (!user) {
+                return res.status(404).json({ error: 'Usuário não encontrado.' });
+            }
+
+            // Chama a função changePassword para atualizar a senha no banco de dados
+            changePassword(user.id, newPassword, (error) => {
+                if (error) {
+                    console.error('Erro na atualização de senha:', error);
+                    return res.status(500).json({ error: 'Erro na atualização de senha.' });
+                }
+
+                return res.status(200).json({ message: 'Senha do usuário atualizada com sucesso!' });
+            });
+        });
+    } catch (error) {
+        console.error('Erro na redefinição de senha:', error);
+        return res.status(500).json({ error: 'Erro na redefinição de senha.' });
+    }
+};
+
+
 const deleteUser = (req, res) => {
     const userId = req.params.id;
 
@@ -63,4 +95,4 @@ const deleteUser = (req, res) => {
     })
 }
 
-module.exports = { registerUser, listUsers, updateUser, deleteUser, showUser };
+module.exports = { registerUser, listUsers, updateUser, deleteUser, showUser, resetPassword };

@@ -16,9 +16,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import EnterEvent from './src/screens/EnterEvent';
 import EventInfo from './src/screens/EventInfo';
 import Feed from './src/screens/Feed';
+import ResetPassword from './src/screens/ResetPassword';
+import { Linking } from 'react-native';
 
 
 const Stack = createNativeStackNavigator();
+
+const linking = {
+  prefixes: ['myapp://'],
+  config: {
+    screens: {
+      ResetPassword: 'reset/:resetToken',
+    },
+  },
+}
 
 const App = () => {
 
@@ -37,7 +48,7 @@ const App = () => {
 
   return (
    <SafeAreaProvider>
-      <NavigationContainer>
+      <NavigationContainer linking={linking}>
         <Stack.Navigator>
           {/*{userIsLoggedIn ? (
             <Stack.Screen
@@ -145,6 +156,13 @@ const App = () => {
           <Stack.Screen
             name="Feed"
             component={Feed}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ResetPassword"
+            component={ResetPassword}
             options={{
               headerShown: false,
             }}

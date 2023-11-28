@@ -1,26 +1,38 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { createUserTable } = require('./models/userModel');
-const { registerUser, listUsers, updateUser, deleteUser, showUser } = require('./controllers/user/userController');
+const { registerUser, listUsers, updateUser, deleteUser, showUser, resetPassword } = require('./controllers/user/userController');
 const { listEvents, registerEvent, changeEvent, removeEvent, showEvent, listById, enterEvent, listGuests, removeGuest, showInviteCode, showByCode, listByGuest } = require('./controllers/event/eventController')
 const cors = require('cors');
 const { login } = require('./controllers/user/authController');
+const { sendPasswordResetEmail } = require('./controllers/mails/mailController');
+const authRoutes = require('./auth.js');
 
 const server = express();
 const port = 3000;
 
 server.use(bodyParser.json());
 server.use(cors());
+server.use('/', authRoutes);
 
 // Criação da tabela de usuários
 createUserTable();
+
+server.get('/reset/:token', (req, res) => {
+    const resetToken = req.params.token;
+    // Verifique se o token é válido (por exemplo, consultando seu banco de dados)
+    // Se o token for válido, envie uma resposta de sucesso
+    res.json({ success: true, token: resetToken });
+    res.redirect(`myapp://reset-password/${resetToken}`)
+});
 
 // Operações com os usuários
 server.post('/user/register', registerUser);
 server.get('/users', listUsers);
 server.get('/user/:id', showUser)
-
 server.post('/user/login', login);
+server.post('/user/forgot-password', sendPasswordResetEmail);
+server.post('/user/reset', resetPassword);
 
 server.param('id', (req, res, next, id) => {
     req.userId = parseInt(id, 10);

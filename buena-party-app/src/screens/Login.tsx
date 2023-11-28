@@ -7,8 +7,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import GradientButtonM from '../components/GradientButtonM';
 import styles from '../../assets/styles/styles';
 import { StackNavigationProp } from '@react-navigation/stack';
+import ForgotPassword from './ForgotPassword';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Importe AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type LoginProps = {
   navigation: StackNavigationProp<any>;
@@ -18,22 +19,27 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [error, setError] = useState('');
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   useEffect(() => {
-    // Verifique se há um token armazenado localmente ao carregar a tela de login
+    // Verificar se há um token armazenado localmente ao carregar a tela de login
     checkAuthToken();
   }, []);
 
   const urlAPI = 'http://localhost:3000';
 
   const checkAuthToken = async () => {
-    // Verifique se há um token no AsyncStorage
+    // Verificar se há um token no AsyncStorage
     const authToken = await AsyncStorage.getItem('authToken');
     console.log('authToken:', authToken);
     if (authToken) {
-      // Se houver um token, navegue para a tela Home diretamente
+      // Se houver um token, navegar para a tela Home diretamente
       navigation.navigate('HomeScreen');
     }
+  };
+
+  const navigateToForgotPassword = () => {
+    setShowForgotPassword(true);
   };
   
   const handleLogin = async () => {
@@ -46,7 +52,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
       if (response.status === 200) {
         console.log(response.data.user.nome);
 
-        // Armazene o token no AsyncStorage após um login bem-sucedido
+        // Armazenar o token no AsyncStorage após um login bem-sucedido
         await AsyncStorage.setItem('authToken', response.data.token);
         await AsyncStorage.setItem('idUser', response.data.user.id);
         await AsyncStorage.setItem('nomeUser', response.data.user.nome);
@@ -103,9 +109,8 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
             value={senha}
             type="password"
           ></FormBox>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={navigateToForgotPassword}>
             <Text style={style.Senha}>Esqueceu a senha?</Text>
-            
           </TouchableOpacity>
           {error ? <Text style={style.error}>{error}</Text> : null}
           <View>
@@ -114,7 +119,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
             </GradientButtonM>
             
           </View>
-          
+          {showForgotPassword && <ForgotPassword onClose={() => setShowForgotPassword(false)} />}
         </View>
       </SafeAreaView>
 
