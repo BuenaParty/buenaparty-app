@@ -13,7 +13,6 @@ const port = 3000;
 
 server.use(bodyParser.json());
 server.use(cors());
-server.use('/', authRoutes);
 
 // Criação da tabela de usuários
 createUserTable();
@@ -56,7 +55,9 @@ server.get('/event/guests/:id', listGuests);
 server.delete('/event/guest/:eventId/:userId', removeGuest);
 server.post('/event/enter', enterEvent);
 server.get('/event/byCode/:codigo_convite', showByCode);
-server.get('/event/guest/:id', listByGuest)
+server.get('/event/guest/:id', listByGuest);
+
+server.use('/', authRoutes);
 
 server.listen(port, () => { console.log(`O servidor Express está rodando em http://localhost:${port}`); });
 

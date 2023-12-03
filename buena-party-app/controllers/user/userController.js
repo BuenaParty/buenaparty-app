@@ -1,3 +1,4 @@
+const { getEventByUserId, deleteEvent } = require('../../models/eventModel');
 const { insertUser, getUsers, changeUser, removeUser, resetAutoIncrement, getUserById, changePassword, getUserByEmail } = require('../../models/userModel');
 const User = require('../../models/userModel');
 
@@ -84,6 +85,22 @@ const resetPassword = async (req, res) => {
 
 const deleteUser = (req, res) => {
     const userId = req.params.id;
+
+    getEventByUserId(userId, (error, events) => {
+        if (error) {
+            res.status(500).json({ error: 'Erro ao verificar eventos associados ao usuário.' });
+        } else {
+            events.forEach((evento) => {
+                deleteEvent(evento.id, (error, deletedEvent) => {
+                    if (error) {
+                        console.error(`Erro ao excluir evento ${evento.id} associado ao usuário ${userId}: ${error}`);
+                    } else {
+                        console.log(`Evento ${evento.id} associado ao usuário ${userId} excluído com sucesso.`);
+                    }
+                });
+            });
+        }
+    })
 
     removeUser(userId, (error, deletedUser) => {
         if (error) {
