@@ -15,6 +15,7 @@ const urlAPI = 'http://localhost:3000';
 
 const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onClose }) => {
   const [email, setEmail] = useState('');
+  const [mensagem, setMensagem] = useState('');
 
   const handleForgotPassword = async () => {
     try {
@@ -26,8 +27,10 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onClose }) => {
         await axios.post(`${urlAPI}/user/forgot-password`, { e_mail: email });
 
         console.log('Email para resetar a senha enviado com sucesso');
+        setMensagem('Email para resetar a senha enviado com sucesso');
     } catch (error) {
         console.error('Erro ao enviar email para resetar a senha:', error);
+        setMensagem('Erro ao enviar email para resetar a senha');
     }
 };
 
@@ -43,8 +46,8 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onClose }) => {
       <FormBox
         style={{
             formBox: {
-                width: width - 40,
-                height: 40,
+                width: width - 80,
+                height: 10,
                 marginBottom: 20,
             }
         }}
@@ -57,6 +60,9 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onClose }) => {
       <GradientButtonM style={style.button} colors={[]} onPress={handleForgotPassword}>
         <Text style={style.buttonText}>Enviar email de redefinição</Text>
       </GradientButtonM>
+        {mensagem !== null && (
+          <Text style={style.mensagem}>{mensagem}</Text>
+        )}
     </View>
   );
 };
@@ -65,9 +71,9 @@ const style = StyleSheet.create({
     modalContainer: {
         backgroundColor: '#fff',
         padding: 20,
-        borderRadius: 10,
+        borderRadius: 15,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
       },
       modalHeader: {
         flexDirection: 'row',
@@ -76,35 +82,40 @@ const style = StyleSheet.create({
         marginBottom: 10,
       },
       closeButton: {
-        fontSize: 20,
+        fontSize: 15,
         fontWeight: 'bold',
       },
       modalTitle: {
         fontSize: 24,
-        marginBottom: 10,
+        marginBottom: 20,
         fontWeight: 'bold',
       },
       input: {
         width: width - 40,
-        height: 40,
+        height: 20,
         backgroundColor: 'white',
         borderRadius: 8,
         paddingHorizontal: 10,
         marginBottom: 20,
       },
       button: {
-        width: width - 40,
+        width: width - 100,
         height: 40,
         backgroundColor: 'blue', // Adjust the color as needed
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 10,
+        marginTop: 10,
+        marginBottom: 20,
       },
       buttonText: {
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
+      },
+      mensagem: {
+        color: 'green',
+        marginTop: 0
       },
     });
 

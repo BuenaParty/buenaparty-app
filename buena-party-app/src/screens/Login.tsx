@@ -119,7 +119,10 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
             </GradientButtonM>
             
           </View>
+          <View style={style.modalBox}>
           {showForgotPassword && <ForgotPassword onClose={() => setShowForgotPassword(false)} />}
+          </View>
+          
         </View>
       </SafeAreaView>
 
@@ -134,6 +137,13 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
 const style = StyleSheet.create({
   background: {
     flex: 1
+  },
+  modalBox: {
+    flex: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: -50
   },
   container: {
     justifyContent: 'center',

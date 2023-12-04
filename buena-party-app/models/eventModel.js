@@ -3,6 +3,8 @@ const db = require('../db');
 const createEventTable = () => {
     
     db.serialize(() => {
+        
+
         db.run('CREATE TABLE IF NOT EXISTS evento (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nome TEXT NOT NULL, endereco TEXT NOT NULL, data DATE NOT NULL, horario TIME NOT NULL, criado_por INTEGER NOT NULL, codigo_convite TEXT UNIQUE, FOREIGN KEY (criado_por) REFERENCES usuario (id))', (error) => {
             if (error) {
                 console.log(`Não foi possível criar a tabela "evento": ${error}`);

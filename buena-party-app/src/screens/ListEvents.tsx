@@ -36,6 +36,7 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
   const [eventToDelete, setEventToDelete] = useState<Event | null>(null);
   const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
   const [guestEvents, setGuestEvents] = useState<Event[]>([]);
+  
 
   const showDeleteConfirmation = (event: Event) => {
     setEventToDelete(event);
@@ -53,7 +54,6 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
     }
     hideDeleteConfirmation();
   };
-
 
   useEffect(() => {
     const loadEvents = async () => {
@@ -87,7 +87,7 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
         }
       } catch (error) {
         console.error('Erro ao buscar eventos:', error);
-      }
+      } 
     };
   
     loadEvents();
@@ -166,6 +166,7 @@ const ListEvents: React.FC<ListEventsProps> = ({ navigation }) => {
                     <GradientButtonM onPress={() => navigateToGuests(event.id)} colors={[]} >
                         <Text style={styles.gradientButtonLText}>Convidados</Text>
                     </GradientButtonM>
+                    
               </View>
               </View>
         ))
@@ -222,6 +223,7 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     top: 10,
+    marginBottom: 100,
   },
   text: {
     color: '#fff',

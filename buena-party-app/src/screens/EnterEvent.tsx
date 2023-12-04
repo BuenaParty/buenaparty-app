@@ -73,7 +73,7 @@ type EnterEventProps = {
 
             const eventName = enterEventResponse.data.event.nome;
             // Lógica adicional ou navegação pode ser adicionada aqui
-            navigation.navigate('EventInfo', { eventName });
+            navigation.navigate('ListEvents');
           } else {
             console.log('Erro ao entrar no evento:', enterEventResponse.data);
             // Manipule o erro conforme necessário
